@@ -1,1 +1,16 @@
 @import "bootstrap";
+
+.page-header {
+  @extend .mb-4;
+
+  display: flex;
+  align-items: center;
+
+  .page-header__title {
+    @extend .h1;
+  }
+
+  .page-header__actions {
+    margin-left: auto;
+  }
+}
