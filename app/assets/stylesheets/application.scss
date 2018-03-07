@@ -14,3 +14,11 @@
     margin-left: auto;
   }
 }
+
+.required {
+  &::after {
+    @extend .text-danger;
+
+    content: ' *';
+  }
+}
