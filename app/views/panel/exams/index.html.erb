@@ -6,8 +6,18 @@
   </div>
 </div>
 
-<div class="card">
-  <div class="card-body">
-    Simulado de ciências
+<% @exams.each do |exam| %>
+  <div class="card mb-1">
+    <div class="card-body">
+      <div class="row align-items-center">
+        <div class="col">
+          <%= exam.title %>
+        </div>
+
+        <div class="col-auto">
+          <a href="<%= edit_panel_exam_path(exam) %>" class="btn btn-link btn-sm">Editar</a>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+<% end %>

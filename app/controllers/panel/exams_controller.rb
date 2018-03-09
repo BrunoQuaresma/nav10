@@ -1,5 +1,6 @@
 class Panel::ExamsController < PanelController
   def index
+    @exams = Exam.all
   end
 
   def new
