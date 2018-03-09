@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  description: MyText
+  right_answer_id: 1
+  exam: one
+
+two:
+  description: MyText
+  right_answer_id: 1
+  exam: two

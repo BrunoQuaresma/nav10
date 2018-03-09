@@ -11,10 +11,14 @@ class HelloNote extends React.Component {
     this.createNewQuestion()
   }
 
-  createNewQuestion() {
+  createNewQuestion(event) {
+    if(event) {
+      event.preventDefault();
+    }
+
     const currentQuestions = this.state.questions
     const newQuestion = {
-      id: Math.random().toString(36).substr(2, 9),
+      id: Math.floor((Math.random() * 100000) + 1),
       open: true
     }
 
@@ -63,7 +67,7 @@ class HelloNote extends React.Component {
             Adicionar questão
           </button>
 
-          <button className="btn btn-primary">
+          <button type="submit" className="btn btn-primary">
             Salvar
           </button>
         </div>

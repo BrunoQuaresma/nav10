@@ -10,10 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180309225933) do
+ActiveRecord::Schema.define(version: 20180309231134) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "exam_question_options", force: :cascade do |t|
+    t.string "title"
+    t.bigint "exam_question_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["exam_question_id"], name: "index_exam_question_options_on_exam_question_id"
+  end
+
+  create_table "exam_questions", force: :cascade do |t|
+    t.text "description"
+    t.integer "right_option_id"
+    t.bigint "exam_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["exam_id"], name: "index_exam_questions_on_exam_id"
+  end
 
   create_table "exams", force: :cascade do |t|
     t.string "title"
@@ -42,5 +59,7 @@ ActiveRecord::Schema.define(version: 20180309225933) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "exam_question_options", "exam_questions"
+  add_foreign_key "exam_questions", "exams"
   add_foreign_key "exams", "users"
 end

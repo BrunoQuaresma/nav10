@@ -5,4 +5,21 @@ class Panel::ExamsController < PanelController
   def new
     @new_exam = current_user.exams.new
   end
+
+  def create
+    current_user.exams.create(exam_params)
+
+    redirect_to panel_exams_path
+  end
+
+  private
+
+  def exam_params
+    params.require(:exam).permit(
+      :title, :duration_in_minutes,
+      exam_questions_attributes: [:description,
+        exam_question_options_attributes: [:title]
+      ]
+    )
+  end
 end
