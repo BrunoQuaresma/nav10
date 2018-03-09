@@ -3,7 +3,7 @@ class QuestionForm extends React.Component {
     const { question } = this.props
 
     return(
-      <div className="card mb-1">
+      <div className={`card mb-1`}>
         <div className="card-header text-right">
           <button className="btn btn-link" onClick={this.handleToggleClick.bind(this)}>
             {question.open ? 'Esconder' : 'Exibir'}

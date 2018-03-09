@@ -55,12 +55,18 @@ class HelloNote extends React.Component {
           />
         ))}
 
-        <button
-          onClick={this.createNewQuestion.bind(this)}
-          className="btn btn-primary mt-4"
-        >
-          Adicionar questão
-        </button>
+        <div className="form-group mt-3">
+          <button
+            onClick={this.createNewQuestion.bind(this)}
+            className="btn btn-light mr-2"
+          >
+            Adicionar questão
+          </button>
+
+          <button className="btn btn-primary">
+            Salvar
+          </button>
+        </div>
       </div>
     )
   }
