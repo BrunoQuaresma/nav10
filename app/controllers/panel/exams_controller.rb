@@ -3,5 +3,6 @@ class Panel::ExamsController < PanelController
   end
 
   def new
+    @new_exam = current_user.exams.new
   end
 end
