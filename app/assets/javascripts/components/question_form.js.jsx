@@ -126,9 +126,13 @@ class QuestionForm extends React.Component {
   }
 
   handleRemoveClick() {
-    const { onRemove, question } = this.props
+    const confirmRemove = confirm('Você realmente deseja deletar esta questão?')
 
-    onRemove(question.id)
+    if(confirmRemove) {
+      const { onRemove, question } = this.props
+
+      onRemove(question.id)
+    }
   }
 
   handleToggleClick() {
