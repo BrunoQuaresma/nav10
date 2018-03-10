@@ -36,7 +36,7 @@ class QuestionForm extends React.Component {
       <div className={`card mb-1`}>
         <div className="card-header">
           <div className="row align-items-center">
-            <div className="col">
+            <div className="col text-ellipsis">
               <span className="card-title">
                 {this.state.headline}
               </span>
