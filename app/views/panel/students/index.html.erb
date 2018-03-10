@@ -1,0 +1,23 @@
+<div class="page-header">
+  <h1 class="page-header__title">Estudantes</h1>
+
+  <div class="page-header__actions">
+    <a href="<%= new_panel_student_path %>" class="btn btn-primary">Novo estudante</a>
+  </div>
+</div>
+
+<% @students.each do |student| %>
+  <div class="card mb-1">
+    <div class="card-body">
+      <div class="row align-items-center">
+        <div class="col">
+          <%= student.name %>
+        </div>
+
+        <div class="col-auto">
+          <a href="<%= edit_panel_student_path(student) %>" class="btn btn-link btn-sm">Editar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
