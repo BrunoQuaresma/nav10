@@ -1,15 +1,33 @@
 class QuestionForm extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      headline: props.question.description
+    }
+  }
+
   render() {
     const { question } = this.props
 
     return(
       <div className={`card mb-1`}>
-        <div className="card-header text-right">
-          <button className="btn btn-link" onClick={this.handleToggleClick.bind(this)}>
-            {question.open ? 'Esconder' : 'Exibir'}
-          </button>
+        <div className="card-header">
+          <div className="row align-items-center">
+            <div className="col">
+              <span className="card-title">
+                {this.state.headline}
+              </span>
+            </div>
 
-          <button className="btn btn-link" onClick={this.handleRemoveClick.bind(this)}>Remover</button>
+            <div className="col-auto">
+              <button type="button" className="btn btn-link" onClick={this.handleToggleClick.bind(this)}>
+                {question.open ? 'Esconder' : 'Exibir'}
+              </button>
+
+              <button type="button" className="btn btn-link" onClick={this.handleRemoveClick.bind(this)}>Remover</button>
+            </div>
+          </div>
         </div>
 
         {question.open && this.renderBody()}
@@ -22,9 +40,21 @@ class QuestionForm extends React.Component {
 
     return (
       <div className="card-body">
+        {
+          !question.isNew && (
+            <input
+              type="hidden"
+              name={`exam[exam_questions_attributes][${question.id}][id]`}
+              value={question.id}
+            />
+          )
+        }
+
         <div className="form-group">
           <label className="required" htmlFor="">Enunciado</label>
           <textarea
+            onChange={this.updateHeadline.bind(this)}
+            defaultValue={question.description}
             className="form-control"
             name={`exam[exam_questions_attributes][${question.id}][description]`}
             rows="3"
@@ -35,11 +65,28 @@ class QuestionForm extends React.Component {
         <div className="form-group">
           <label className="required" htmlFor="">Respostas</label>
 
-          <input required name={`exam[exam_questions_attributes][${question.id}][exam_question_options_attributes][1][title]`} type="text" className="form-control mb-1" placeholder="Resposta 1" />
-          <input required name={`exam[exam_questions_attributes][${question.id}][exam_question_options_attributes][2][title]`} type="text" className="form-control mb-1" placeholder="Resposta 2" />
-          <input required name={`exam[exam_questions_attributes][${question.id}][exam_question_options_attributes][3][title]`} type="text" className="form-control mb-1" placeholder="Resposta 3" />
-          <input required name={`exam[exam_questions_attributes][${question.id}][exam_question_options_attributes][4][title]`} type="text" className="form-control mb-1" placeholder="Resposta 4" />
-          <input required name={`exam[exam_questions_attributes][${question.id}][exam_question_options_attributes][5][title]`} type="text" className="form-control mb-1" placeholder="Resposta 5" />
+          {question.exam_question_options.map((option, index) => (
+            <div key={option.id}>
+              {
+                !question.isNew && (
+                  <input
+                    type="hidden"
+                    name={`exam[exam_questions_attributes][${question.id}][exam_question_options_attributes][${option.id}][id]`}
+                    value={option.id}
+                  />
+                )
+              }
+
+              <input
+                required
+                name={`exam[exam_questions_attributes][${question.id}][exam_question_options_attributes][${option.id}][title]`}
+                type="text"
+                className="form-control mb-1"
+                placeholder={`Resposta ${index + 1}`}
+                defaultValue={option.title}
+              />
+            </div>
+          ))}
         </div>
 
         <div className="form-group">
@@ -67,5 +114,9 @@ class QuestionForm extends React.Component {
     const { onToggle, question } = this.props
 
     onToggle(question.id)
+  }
+
+  updateHeadline(event) {
+    this.setState({ headline: event.target.value })
   }
 }

@@ -3,23 +3,36 @@ class HelloNote extends React.Component {
     super(props)
 
     this.state = {
-      questions: []
+      questions: this.props.questions || []
     }
   }
 
   componentDidMount() {
-    this.createNewQuestion()
+    const isQuestionsEmpty = this.state.questions.length == 0
+
+    if(isQuestionsEmpty) {
+      this.createEmptyQuestion()
+    }
   }
 
-  createNewQuestion(event) {
+  createEmptyQuestion(event) {
     if(event) {
       event.preventDefault();
     }
 
     const currentQuestions = this.state.questions
+
     const newQuestion = {
       id: Math.floor((Math.random() * 100000) + 1),
-      open: true
+      open: true,
+      isNew: true,
+      exam_question_options: [
+        { id: 1 },
+        { id: 2 },
+        { id: 3 },
+        { id: 4 },
+        { id: 5 }
+      ]
     }
 
     this.setState({ questions: currentQuestions.concat(newQuestion)})
@@ -61,7 +74,8 @@ class HelloNote extends React.Component {
 
         <div className="form-group mt-3">
           <button
-            onClick={this.createNewQuestion.bind(this)}
+            type="button"
+            onClick={this.createEmptyQuestion.bind(this)}
             className="btn btn-light mr-2"
           >
             Adicionar questão
