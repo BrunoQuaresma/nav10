@@ -10,6 +10,28 @@ class QuestionForm extends React.Component {
   render() {
     const { question } = this.props
 
+    if(question.destroy) {
+      {
+        return question.new
+                  ? <div />
+                  :  (
+                    <div>
+                      <input
+                        type="hidden"
+                        name={`exam[exam_questions_attributes][${question.id}][id]`}
+                        value={question.id}
+                      />
+
+                      <input
+                        type="hidden"
+                        name={`exam[exam_questions_attributes][${question.id}][_destroy]`}
+                        value={question.id}
+                      />
+                    </div>
+                  )
+      }
+    }
+
     return(
       <div className={`card mb-1`}>
         <div className="card-header">

@@ -42,7 +42,13 @@ class HelloNote extends React.Component {
     const currentQuestions = this.state.questions
 
     this.setState({
-      questions: currentQuestions.filter(question => question.id !== questionId)
+      questions: currentQuestions.map(question => {
+        if(question.id === questionId) {
+          return { ...question, destroy: true }
+        }
+
+        return question
+      })
     })
   }
 

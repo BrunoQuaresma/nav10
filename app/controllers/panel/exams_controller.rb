@@ -30,7 +30,7 @@ class Panel::ExamsController < PanelController
   def exam_params
     params.require(:exam).permit(
       :title, :duration_in_minutes,
-      exam_questions_attributes: [:id, :description,
+      exam_questions_attributes: [:id, :description, :_destroy,
         exam_question_options_attributes: [:id, :title]
       ]
     )
