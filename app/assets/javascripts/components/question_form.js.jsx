@@ -99,28 +99,27 @@ class QuestionForm extends React.Component {
                 )
               }
 
-              <input
-                required
-                name={`exam[exam_questions_attributes][${question.id}][exam_question_options_attributes][${option.id}][title]`}
-                type="text"
-                className="form-control mb-1"
-                placeholder={`Resposta ${index + 1}`}
-                defaultValue={option.title}
-              />
+              <div className="div d-flex align-items-center">
+                <div className="pr-2">
+                  <input
+                    type="radio"
+                    name={`exam[exam_questions_attributes][${question.id}][right_option_id]`}
+                    value={option.id}
+                    checked={question.right_option_id === option.id }
+                  />
+                </div>
+
+                <input
+                  required
+                  name={`exam[exam_questions_attributes][${question.id}][exam_question_options_attributes][${option.id}][title]`}
+                  type="text"
+                  className="form-control mb-1"
+                  placeholder={`Resposta ${index + 1}`}
+                  defaultValue={option.title}
+                />
+              </div>
             </div>
           ))}
-        </div>
-
-        <div className="form-group">
-          <label className="required" htmlFor="">Resposta correta</label>
-
-          <select required name={`exam[exam_questions_attributes][${question.id}][correct_option_index]`} className="form-control">
-            <option value="1">Resposta 1</option>
-            <option value="2">Resposta 2</option>
-            <option value="3">Resposta 3</option>
-            <option value="4">Resposta 4</option>
-            <option value="5">Resposta 5</option>
-          </select>
         </div>
       </div>
     )
