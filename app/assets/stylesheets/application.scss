@@ -4,6 +4,10 @@ body, html {
   height: 100%;
 }
 
+.card-body {
+  padding: 0.8rem 1.25rem;
+}
+
 .page-header {
   @extend .mb-4;
 
@@ -13,6 +17,7 @@ body, html {
   .page-header__title {
     @extend .h1;
   }
+
 
   .page-header__actions {
     margin-left: auto;

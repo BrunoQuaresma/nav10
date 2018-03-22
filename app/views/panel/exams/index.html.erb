@@ -6,16 +6,30 @@
   </div>
 </div>
 
+<% if @exams.empty? %>
+  <div class="text-center">
+    <h3 class="text-muted">Nenhum simulado cadastrado</h3>
+  </div>
+<% end %>
+
 <% @exams.each do |exam| %>
   <div class="card mb-1">
     <div class="card-body">
       <div class="row align-items-center">
-        <div class="col">
-          <%= exam.title %>
+        <div class="col h5 m-0">
+          <a href="<%= edit_panel_exam_path(exam) %>">
+            <%= exam.title %>
+          </a>
         </div>
 
-        <div class="col-auto">
-          <a href="<%= edit_panel_exam_path(exam) %>" class="btn btn-link btn-sm">Editar</a>
+        <div class="col">
+          <div>Duração</div>
+          <div><b>120 minutos</b></div>
+        </div>
+
+        <div class="col">
+          <div>Questões</div>
+          <div><b>1</b></div>
         </div>
       </div>
     </div>

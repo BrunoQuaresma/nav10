@@ -11,10 +11,20 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 </head>
 <body>
-  <%= render partial: 'layouts/panel/navbar' %>
+  <div class="d-flex flex-column h-100">
+    <div>
+      <%= render partial: 'layouts/panel/navbar' %>
+    </div>
 
-  <div class="container py-5">
-    <%= yield %>
+    <div class="container py-5">
+      <%= yield %>
+    </div>
+
+    <footer class="mt-auto py-5">
+      <div class="container text-muted">
+        Todos os direitos reservados - <b>NAV10 2018</b>
+      </div>
+    </footer>
   </div>
 </body>
 </html>
