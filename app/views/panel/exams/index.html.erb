@@ -31,6 +31,10 @@
           <div>Questões</div>
           <div><b>1</b></div>
         </div>
+
+        <div class="col-auto ml-auto">
+          <%= button_to "Excluir", panel_exam_path(exam), method: :delete, class: 'btn btn-sm btn-confirm', data: { confirm: 'Você tem certeza que deseja deletar este simulado?' } %>
+        </div>
       </div>
     </div>
   </div>

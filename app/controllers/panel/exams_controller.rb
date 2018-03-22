@@ -25,6 +25,14 @@ class Panel::ExamsController < PanelController
     redirect_to panel_exams_path
   end
 
+  def destroy
+    @exam = Exam.find(params[:id])
+
+    @exam.destroy
+
+    redirect_to panel_exams_path
+  end
+
   private
 
   def exam_params
