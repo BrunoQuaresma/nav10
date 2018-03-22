@@ -1,0 +1,70 @@
+<div class="container-fluid h-100">
+  <div class="row align-items-center h-100">
+    <div class="col col-sm-6 col-lg-4 p-lg-5 mx-sm-auto">
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <h1 class="text-center">
+          NAV10<br>
+          <small class="text-muted">Entrar</small>
+        </h1>
+
+        <div class="form-group">
+          <%= f.label :email, 'E-mail' %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", required: true, class: 'form-control' %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :password, 'Senha' %>
+          <%= f.password_field :password, autocomplete: "off", required: true, class: 'form-control' %>
+        </div>
+
+        <div class="form-group">
+          <button class="btn-primary btn-lg btn-block">Entrar</button>
+        </div>
+      <% end %>
+
+      <footer class="text-center text-muted">
+        Todos os direitos reservados<br>
+        <b>NAV10 - 2018</b>
+      </footer>
+    </div>
+
+    <div class="d-none d-lg-block col-lg-8 bg-primary h-100 text-light p-5">
+      <div class="row align-items-center h-100">
+        <div class="col">
+          <div class="display-3">
+            Muito bem-vindo!
+          </div>
+          <p class="h1 font-weight-light">
+            Faça seu login e acesse os seus simulados
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <h2>Log in</h2>
+
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password %><br />
+    <%= f.password_field :password, autocomplete: "off" %>
+  </div>
+
+  <% if devise_mapping.rememberable? -%>
+    <div class="field">
+      <%= f.check_box :remember_me %>
+      <%= f.label :remember_me %>
+    </div>
+  <% end -%>
+
+  <div class="actions">
+    <%= f.submit "Log in" %>
+  </div>
+<% end %>
+
+<%= render "users/shared/links" %> -->

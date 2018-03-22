@@ -1,5 +1,9 @@
 @import "bootstrap";
 
+body, html {
+  height: 100%;
+}
+
 .page-header {
   @extend .mb-4;
 
