@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20180310054352) do
 
   create_table "exam_questions", force: :cascade do |t|
     t.text "description"
-    t.integer "right_option_id"
+    t.integer "right_option_index"
     t.bigint "exam_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

@@ -103,9 +103,9 @@ class QuestionForm extends React.Component {
                 <div className="pr-2">
                   <input
                     type="radio"
-                    name={`exam[exam_questions_attributes][${question.id}][right_option_id]`}
+                    name={`exam[exam_questions_attributes][${question.id}][right_option_index]`}
                     value={option.id}
-                    defaultChecked={question.right_option_id === option.id}
+                    defaultChecked={question.right_option_index === index}
                   />
                 </div>
 
