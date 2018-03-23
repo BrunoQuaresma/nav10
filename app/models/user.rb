@@ -6,5 +6,11 @@ class User < ApplicationRecord
 
   enum role: { student: 0, teacher: 1 }
 
+  has_and_belongs_to_many :groups
   has_many :exams
+  has_many :exam_applications, through: :groups
+
+  def teacher?
+    role == "teacher"
+  end
 end

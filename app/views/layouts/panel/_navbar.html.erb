@@ -12,8 +12,22 @@
           <a class="nav-link" href="<%= panel_exams_path %>">Simulados</a>
         </li>
 
+        <% if current_user.teacher? %>
+          <li class="nav-item">
+            <a class="nav-link" href="<%= panel_exam_applications_path %>">Aplicações</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="<%= panel_students_path %>">Estudantes</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="<%= panel_groups_path %>">Turmas</a>
+          </li>
+        <% end %>
+
         <li class="nav-item">
-          <a class="nav-link" href="<%= panel_students_path %>">Estudantes</a>
+          <%= link_to('Sair', destroy_user_session_path, method: :delete, class: 'nav-link') %>
         </li>
       </ul>
     </div>

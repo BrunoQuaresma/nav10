@@ -1,0 +1,12 @@
+<div class="page-header">
+  <h1 class="page-header__title">Editar aplicação</h1>
+
+  <div class="page-header__actions">
+    <a href="<%= panel_groups_path %>" class="btn btn-light">Cancelar</a>
+  </div>
+</div>
+
+<%= render partial: 'form', locals: {
+    exam_application: @exam_application,
+    groups: @groups,
+    exams: @exams } %>

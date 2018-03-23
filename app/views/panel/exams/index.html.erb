@@ -24,12 +24,12 @@
 
         <div class="col">
           <div>Duração</div>
-          <div><b>120 minutos</b></div>
+          <div><b><%= exam.duration_in_minutes %> minutos</b></div>
         </div>
 
         <div class="col">
           <div>Questões</div>
-          <div><b>1</b></div>
+          <div><b><%= exam.exam_questions.count %></b></div>
         </div>
 
         <div class="col-auto ml-auto">

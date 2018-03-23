@@ -22,6 +22,24 @@
           </a>
         </div>
 
+        <div class="col">
+          <div>E-mail</div>
+          <div><b><%= student.email %></b></div>
+        </div>
+
+        <div class="col">
+          <div>Turmas</div>
+          <div>
+            <% if student.groups.empty? %>
+              <b class="text-muted">Nenhuma</b>
+            <% end %>
+
+            <% student.groups.each do |group| %>
+              <div><b><%= group.name %></b></div>
+            <% end %>
+          </div>
+        </div>
+
         <div class="col-auto ml-auto">
           <%= button_to "Excluir", panel_student_path(student), method: :delete, class: 'btn btn-sm btn-confirm', data: { confirm: 'Você tem certeza que deseja deletar este estudante?' } %>
         </div>

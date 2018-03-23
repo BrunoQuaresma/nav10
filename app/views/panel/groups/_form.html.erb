@@ -1,0 +1,22 @@
+<%= form_for [:panel, group]  do |f| %>
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group">
+        <label for="" class="required">Nome</label>
+        <%= f.text_field :name, class: 'form-control', required: true %>
+      </div>
+
+      <div class="form-group">
+        <label for="">Alunos da turma</label>
+
+        <%= f.collection_select :user_ids, students, :id, :name, {}, { :multiple => true, class: 'form-control' } %>
+      </div>
+
+      <div class="form-group">
+        <button class="btn btn-primary">
+          Salvar turma
+        </button>
+      </div>
+    </div>
+  </div>
+<% end %>

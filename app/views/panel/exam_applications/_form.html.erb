@@ -1,0 +1,21 @@
+<%= form_for [:panel, exam_application]  do |f| %>
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group">
+        <label for="">Simulado</label>
+        <%= f.select :exam_id, exams.collect { |exam| [exam.title, exam.id] }, {}, { class: 'form-control' } %>
+      </div>
+
+      <div class="form-group">
+        <label for="">Turma</label>
+        <%= f.select :group_id, groups.collect { |group| [group.name, group.id] }, {}, { class: 'form-control' } %>
+      </div>
+
+      <div class="form-group">
+        <button class="btn btn-primary">
+          Salvar aplicação
+        </button>
+      </div>
+    </div>
+  </div>
+<% end %>
