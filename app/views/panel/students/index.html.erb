@@ -6,16 +6,24 @@
   </div>
 </div>
 
+<% if @students.empty? %>
+  <div class="text-center">
+    <h3 class="text-muted">Nenhum estudante cadastrado</h3>
+  </div>
+<% end %>
+
 <% @students.each do |student| %>
   <div class="card mb-1">
     <div class="card-body">
       <div class="row align-items-center">
-        <div class="col">
-          <%= student.name %>
+        <div class="col h5 m-0">
+          <a href="<%= edit_panel_student_path(student) %>">
+            <%= student.name %>
+          </a>
         </div>
 
-        <div class="col-auto">
-          <a href="<%= edit_panel_student_path(student) %>" class="btn btn-link btn-sm">Editar</a>
+        <div class="col-auto ml-auto">
+          <%= button_to "Excluir", panel_student_path(student), method: :delete, class: 'btn btn-sm btn-confirm', data: { confirm: 'Você tem certeza que deseja deletar este estudante?' } %>
         </div>
       </div>
     </div>
