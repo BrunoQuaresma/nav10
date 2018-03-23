@@ -11,25 +11,23 @@ class QuestionForm extends React.Component {
     const { question } = this.props
 
     if(question.destroy) {
-      {
-        return question.new
-                  ? <div />
-                  :  (
-                    <div>
-                      <input
-                        type="hidden"
-                        name={`exam[exam_questions_attributes][${question.id}][id]`}
-                        value={question.id}
-                      />
+      return question.isNew
+                ? <div />
+                :  (
+                  <div>
+                    <input
+                      type="hidden"
+                      name={`exam[exam_questions_attributes][${question.id}][id]`}
+                      value={question.id}
+                    />
 
-                      <input
-                        type="hidden"
-                        name={`exam[exam_questions_attributes][${question.id}][_destroy]`}
-                        value={question.id}
-                      />
-                    </div>
-                  )
-      }
+                    <input
+                      type="hidden"
+                      name={`exam[exam_questions_attributes][${question.id}][_destroy]`}
+                      value={question.id}
+                    />
+                  </div>
+                )
     }
 
     return(
@@ -104,7 +102,7 @@ class QuestionForm extends React.Component {
                   <input
                     type="radio"
                     name={`exam[exam_questions_attributes][${question.id}][right_option_index]`}
-                    value={option.id}
+                    value={index}
                     defaultChecked={question.right_option_index === index}
                   />
                 </div>
