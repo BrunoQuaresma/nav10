@@ -40,7 +40,7 @@ class Exam extends React.Component {
       return (
         <div className="container text-center py-5">
           <h1>Aviso!</h1>
-          <p className="lead">
+          <p className="lead mb-5">
             Após o início do exame ele não poderá ser interrompido até sua finalização
             ou limite de tempo.
           </p>

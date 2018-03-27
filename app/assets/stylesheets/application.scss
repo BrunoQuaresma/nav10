@@ -87,13 +87,14 @@ button {
 }
 
 .page-header {
-  @extend .mb-4;
+  @extend .mb-3;
 
   display: flex;
   align-items: center;
 
   .page-header__title {
     @extend .h1;
+    margin: 0;
   }
 
 
