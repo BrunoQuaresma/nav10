@@ -8,6 +8,7 @@ class User < ApplicationRecord
 
   has_and_belongs_to_many :groups
   has_many :exams
+  has_many :exam_application_histories
   has_many :exam_applications, through: :groups
 
   def teacher?

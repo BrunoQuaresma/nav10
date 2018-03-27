@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180323005348) do
+ActiveRecord::Schema.define(version: 20180327014809) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "exam_application_histories", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "exam_id"
+    t.string "event"
+    t.string "subject"
+    t.integer "subject_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["exam_id"], name: "index_exam_application_histories_on_exam_id"
+    t.index ["user_id"], name: "index_exam_application_histories_on_user_id"
+  end
 
   create_table "exam_applications", force: :cascade do |t|
     t.bigint "exam_id"
@@ -82,6 +94,8 @@ ActiveRecord::Schema.define(version: 20180323005348) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "exam_application_histories", "exams"
+  add_foreign_key "exam_application_histories", "users"
   add_foreign_key "exam_applications", "exams"
   add_foreign_key "exam_applications", "groups"
   add_foreign_key "exam_question_options", "exam_questions"

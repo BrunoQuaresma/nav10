@@ -2,14 +2,53 @@ class Exam extends React.Component {
   constructor(props) {
     super(props)
 
+    this.history = [];
+
     this.state = {
+      wasStarted: false,
       currentQuesitonIndex: 0,
-      questionAnswers: {}
+      questionAnswers: {},
+      finishLoading: false,
+      finished: false
     }
   }
 
   render() {
     const currentQuestion = this.getCurrentQuestion();
+
+    if(this.state.finishLoading) {
+      return (
+        <div className="container text-center py-5">
+          <h1>Enviando dados...</h1>
+        </div>
+      )
+    }
+
+    if(this.state.finished) {
+      return (
+        <div className="container text-center py-5">
+          <h1 className="mb-4">Você finalizou o simulado!</h1>
+
+          <a href="/panel/student_exams/" className="btn btn-primary btn-lg btn-block">
+            Ir para página inicial
+          </a>
+        </div>
+      )
+    }
+
+    if(!this.state.wasStarted) {
+      return (
+        <div className="container text-center py-5">
+          <h1>Aviso!</h1>
+          <p className="lead">
+            Após o início do exame ele não poderá ser interrompido até sua finalização
+            ou limite de tempo.
+          </p>
+          <a href="/panel/student_exams/" className="btn btn-light btn-lg btn-block">Voltar</a>
+          <button onClick={this.start.bind(this)} className="btn btn-primary btn-lg btn-block">Ok, começar agora</button>
+        </div>
+      )
+    }
 
     return (
       <div>
@@ -28,31 +67,61 @@ class Exam extends React.Component {
           </div>
         </div>
 
-        <div className="container py-5">
-          <h3 className="mb-4">{currentQuestion.description}</h3>
-
-          <div className="mb-3">
-            {currentQuestion.exam_question_options.map((option, index) => (
-              <div
-                className={this.getOptionClassName(index)}
-                key={index}
-                onClick={this.answerCurrentQuestion.bind(this, index)}
-              >
-                <div className="card-body">
-                  {option.title}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {this.renderDefaultActions()}
-        </div>
+        {this.renderQuestion(currentQuestion)}
       </div>
     )
   }
 
+  renderQuestion(currentQuestion) {
+    this.history.push({
+      event: 'see',
+      subject: 'question',
+      subject_id: currentQuestion.id
+    })
+
+    return (
+      <div className="container py-5">
+        <h3 className="mb-4">{currentQuestion.description}</h3>
+
+        <div className="mb-3">
+          {currentQuestion.exam_question_options.map((option, index) => (
+            <div
+              className={this.getOptionClassName(index)}
+              key={index}
+              onClick={this.answerCurrentQuestion.bind(this, index)}
+            >
+              <div className="card-body">
+                {option.title}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {this.renderDefaultActions()}
+      </div>
+    )
+  }
+
+  start() {
+    this.history.push({
+      event: 'start',
+      subject: 'exam',
+      subject_id: this.props.questions[0].exam_id
+    })
+
+    this.setState({
+      wasStarted: true
+    })
+  }
+
   answerCurrentQuestion(index) {
     const { currentQuesitonIndex, questionAnswers } = this.state
+
+    this.history.push({
+      event: 'select',
+      subject: 'question',
+      subject_id: this.getCurrentQuestion().id
+    })
 
     this.setState({
       questionAnswers: {
@@ -108,35 +177,79 @@ class Exam extends React.Component {
 
     return (
       <div>
-        {isLastQuestion && isAnswer && <button className="btn btn-block btn-lg btn-primary">Responder e finalizar</button>}
+        {isLastQuestion && isAnswer && <button className="btn btn-block btn-lg btn-primary" onClick={this.finish.bind(this)}>Finalizar</button>}
         {isAnswer && !isLastQuestion && <button onClick={this.goToNextQuestion.bind(this)} className="btn btn-block btn-lg btn-primary">Ir para próxima</button>}
         {!isFirstQuestion && <button onClick={this.goToPreviousQuestion.bind(this)} className="btn btn-block btn-lg btn-light">Voltar</button>}
         {!isAnswer && !isLastQuestion && <button onClick={this.jumpQuestion.bind(this)} className="btn btn-block btn-lg btn-light">Pular questão</button>}
-        {isLastQuestion && !isAnswer && <button className="btn btn-block btn-lg btn-secondary">Finalizar</button>}
+        {isLastQuestion && !isAnswer && <button className="btn btn-block btn-lg btn-secondary" onClick={this.finish.bind(this)}>Finalizar</button>}
       </div>
     )
   }
 
+  finish() {
+    this.history.push({
+      event: 'finish',
+      subject: 'exam',
+      subject_id: this.props.questions[0].exam_id
+    })
+
+    this.setState({
+      finishLoading: true
+    })
+
+    this.sendHistory();
+  }
+
+  sendHistory() {
+    const url = '/panel/student_exams/' + this.props.questions[0].exam_id + '/history';
+
+    $.post(url, { histories: this.history })
+      .then(() => this.setState({ finishLoading: false, finished: true }));
+  }
+
   jumpQuestion() {
+    this.history.push({
+      event: 'jump',
+      subject: 'question',
+      subject_id: this.getCurrentQuestion().id
+    })
+
     this.goToNextQuestion();
   }
 
   goToNextQuestion() {
+    this.history.push({
+      event: 'go_to_next',
+      subject: 'question',
+      subject_id: this.getCurrentQuestion().id
+    })
+
     this.setState({
       currentQuesitonIndex: this.state.currentQuesitonIndex + 1
     })
   }
 
   goToPreviousQuestion() {
+    this.history.push({
+      event: 'go_to_previous',
+      subject: 'question',
+      subject_id: this.getCurrentQuestion().id
+    })
+
     this.setState({
       currentQuesitonIndex: this.state.currentQuesitonIndex - 1
     })
   }
 
   goToQuestion(index) {
+    this.history.push({
+      event: 'go_to',
+      subject: 'question',
+      subject_id: this.getCurrentQuestion().id
+    })
+
     this.setState({
       currentQuesitonIndex: index
     })
   }
-
 }

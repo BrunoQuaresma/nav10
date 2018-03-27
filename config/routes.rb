@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
     resources :student_exams do
       get '/start', to: 'student_exams#start'
+      post '/history', to: 'student_exams#history'
     end
   end
 end
