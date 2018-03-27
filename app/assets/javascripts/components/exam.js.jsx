@@ -2,8 +2,6 @@ class Exam extends React.Component {
   constructor(props) {
     super(props)
 
-    this.history = [];
-
     this.state = {
       wasStarted: false,
       currentQuesitonIndex: 0,
@@ -73,7 +71,7 @@ class Exam extends React.Component {
   }
 
   renderQuestion(currentQuestion) {
-    this.history.push({
+    this.sendHistory({
       event: 'see',
       subject: 'question',
       subject_id: currentQuestion.id
@@ -103,7 +101,7 @@ class Exam extends React.Component {
   }
 
   start() {
-    this.history.push({
+    this.sendHistory({
       event: 'start',
       subject: 'exam',
       subject_id: this.props.questions[0].exam_id
@@ -117,7 +115,7 @@ class Exam extends React.Component {
   answerCurrentQuestion(index) {
     const { currentQuesitonIndex, questionAnswers } = this.state
 
-    this.history.push({
+    this.sendHistory({
       event: 'select',
       subject: 'question',
       subject_id: this.getCurrentQuestion().id
@@ -187,28 +185,30 @@ class Exam extends React.Component {
   }
 
   finish() {
-    this.history.push({
-      event: 'finish',
-      subject: 'exam',
-      subject_id: this.props.questions[0].exam_id
-    })
-
     this.setState({
       finishLoading: true
     })
 
-    this.sendHistory();
+    this.sendHistory({
+      event: 'finish',
+      subject: 'exam',
+      subject_id: this.props.questions[0].exam_id
+    }).then(() => {
+      this.setState({
+        finishLoading: false,
+        finished: true
+      })
+    })
   }
 
-  sendHistory() {
+  sendHistory(history) {
     const url = '/panel/student_exams/' + this.props.questions[0].exam_id + '/history';
 
-    $.post(url, { histories: this.history })
-      .then(() => this.setState({ finishLoading: false, finished: true }));
+    return $.post(url, { history })
   }
 
   jumpQuestion() {
-    this.history.push({
+    this.sendHistory({
       event: 'jump',
       subject: 'question',
       subject_id: this.getCurrentQuestion().id
@@ -218,7 +218,7 @@ class Exam extends React.Component {
   }
 
   goToNextQuestion() {
-    this.history.push({
+    this.sendHistory({
       event: 'go_to_next',
       subject: 'question',
       subject_id: this.getCurrentQuestion().id
@@ -230,7 +230,7 @@ class Exam extends React.Component {
   }
 
   goToPreviousQuestion() {
-    this.history.push({
+    this.sendHistory({
       event: 'go_to_previous',
       subject: 'question',
       subject_id: this.getCurrentQuestion().id
@@ -242,7 +242,7 @@ class Exam extends React.Component {
   }
 
   goToQuestion(index) {
-    this.history.push({
+    this.sendHistory({
       event: 'go_to',
       subject: 'question',
       subject_id: this.getCurrentQuestion().id

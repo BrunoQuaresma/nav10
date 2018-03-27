@@ -17,13 +17,13 @@ ActiveRecord::Schema.define(version: 20180327014809) do
 
   create_table "exam_application_histories", force: :cascade do |t|
     t.bigint "user_id"
-    t.bigint "exam_id"
+    t.bigint "exam_application_id"
     t.string "event"
     t.string "subject"
     t.integer "subject_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["exam_id"], name: "index_exam_application_histories_on_exam_id"
+    t.index ["exam_application_id"], name: "index_exam_application_histories_on_exam_application_id"
     t.index ["user_id"], name: "index_exam_application_histories_on_user_id"
   end
 
@@ -94,7 +94,7 @@ ActiveRecord::Schema.define(version: 20180327014809) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "exam_application_histories", "exams"
+  add_foreign_key "exam_application_histories", "exam_applications"
   add_foreign_key "exam_application_histories", "users"
   add_foreign_key "exam_applications", "exams"
   add_foreign_key "exam_applications", "groups"

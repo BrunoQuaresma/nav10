@@ -18,8 +18,8 @@
       <div class="card-body">
         <div class="row align-items-center">
           <div class="col h5 m-0">
-            <a href="<%= edit_panel_exam_application_path(exam_application) %>">
-              <%= exam_application.id %>
+            <a href="<%= panel_exam_application_path(exam_application) %>">
+              Aplicação <%= exam_application.id %>
             </a>
           </div>
 
@@ -38,8 +38,9 @@
             <div><b><%= exam_application.created_at %></b></div>
           </div>
 
-          <div class="col-auto ml-auto">
-            <%= button_to "Excluir", panel_exam_application_path(exam_application), method: :delete, class: 'btn btn-sm btn-confirm', data: { confirm: 'Você tem certeza que deseja deletar esta aplicação?' } %>
+          <div class="col-auto ml-auto d-flex">
+            <%= button_to "Excluir", panel_exam_application_path(exam_application), method: :delete, class: 'btn btn-sm btn-confirm mr-2', data: { confirm: 'Você tem certeza que deseja deletar esta aplicação?' } %>
+            <a href="<%= edit_panel_exam_application_path(exam_application) %>" class="btn btn-sm btn-primary">Editar</a>
           </div>
         </div>
       </div>

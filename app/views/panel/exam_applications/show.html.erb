@@ -1,0 +1,29 @@
+<div class="container py-4">
+  <div class="page-header">
+    <h1 class="page-header__title">Aplicação <%= @exam_application.id %></h1>
+
+    <div class="page-header__actions">
+      <a href="<%= panel_exam_applications_path %>" class="btn btn-light">Cancelar</a>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="display-4"><%= @exam_application.users_done_count %></div>
+          <div>Finalizado</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="display-4"><%= number_with_precision(@exam_application.medium_time_count_in_seconds / 60, precision: 2) %></div>
+          <div>Tempo médio em minutos</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
