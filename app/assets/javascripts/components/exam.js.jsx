@@ -13,23 +13,38 @@ class Exam extends React.Component {
 
     return (
       <div>
-        <h3 className="mb-4">{currentQuestion.description}</h3>
-
-        <div className="mb-3">
-          {currentQuestion.exam_question_options.map((option, index) => (
-            <div
-              className={this.getOptionClassName(index)}
-              key={index}
-              onClick={this.answerCurrentQuestion.bind(this, index)}
-            >
-              <div className="card-body">
-                {option.title}
-              </div>
-            </div>
-          ))}
+        <div className="exam-top">
+          <div className="exam-top__scroll">
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>4</button>
+            <button>5</button>
+            <button>6</button>
+            <button>6</button>
+            <button>6</button>
+          </div>
         </div>
 
-        {this.renderDefaultActions()}
+        <div className="container py-4">
+          <h3 className="mb-4">{currentQuestion.description}</h3>
+
+          <div className="mb-3">
+            {currentQuestion.exam_question_options.map((option, index) => (
+              <div
+                className={this.getOptionClassName(index)}
+                key={index}
+                onClick={this.answerCurrentQuestion.bind(this, index)}
+              >
+                <div className="card-body">
+                  {option.title}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {this.renderDefaultActions()}
+        </div>
       </div>
     )
   }
