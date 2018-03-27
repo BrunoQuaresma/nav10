@@ -14,19 +14,21 @@ class Exam extends React.Component {
     return (
       <div>
         <div className="exam-top">
-          <div className="exam-top__scroll px-3">
-            <button>1</button>
-            <button>2</button>
-            <button>3</button>
-            <button>4</button>
-            <button>5</button>
-            <button>6</button>
-            <button>6</button>
-            <button>6</button>
+          <div className="exam-top__scroll">
+            {this.props.questions.map((question, index) => {
+              const className = `
+                ${index === this.state.currentQuesitonIndex ? 'active' : ''}
+                ${this.isQuestionComplete(index) ? 'complete' : ''}
+              `
+
+              return (
+                <button onClick={this.goToQuestion.bind(this, index)} className={className} key={index}>{index + 1}</button>
+              )
+            })}
           </div>
         </div>
 
-        <div className="container py-4">
+        <div className="container py-5">
           <h3 className="mb-4">{currentQuestion.description}</h3>
 
           <div className="mb-3">
@@ -92,6 +94,12 @@ class Exam extends React.Component {
     return questionAnswers[currentQuesitonIndex];
   }
 
+  isQuestionComplete(index) {
+    const { questionAnswers } = this.state;
+
+    return questionAnswers[index] !== undefined;
+  }
+
   renderDefaultActions() {
     const currentQuestionAnswer = this.getCurrentQuestionAnswer()
     const isAnswer = currentQuestionAnswer !== undefined
@@ -124,4 +132,11 @@ class Exam extends React.Component {
       currentQuesitonIndex: this.state.currentQuesitonIndex - 1
     })
   }
+
+  goToQuestion(index) {
+    this.setState({
+      currentQuesitonIndex: index
+    })
+  }
+
 }

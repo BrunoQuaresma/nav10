@@ -34,29 +34,49 @@ body, html {
 
 .exam-top {
   display: block;
-  border-bottom: 1px solid #CCC;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 
   .exam-top__scroll {
     overflow-x: overlay;
     flex-direction: row;
     white-space: nowrap;
-    padding: 1rem 0;
   }
 
   button {
+    width: 3.8rem;
+    height: 3.8rem;
+    font-size: 1.2rem;
     background: none;
-    padding: 0;
     border: 0;
-    width: 35px;
-    height: 35px;
-    border-radius: 100%;
-    background: #CCC;
-    margin-left: 1rem;
+    outline: 0;
 
-    &:first-child {
-      margin-left: 0;
+    &.active {
+      border-top: 3px solid transparent;
+      border-bottom: 3px solid #007bff;
+      font-weight: 700;
+    }
+
+    &.complete {
+      color: #007bff;
     }
   }
+
+  // button {
+  //   background: none;
+  //   padding: 0;
+  //   border: 0;
+  //   width: 35px;
+  //   height: 35px;
+  //   border-radius: 100%;
+  //   background: #CCC;
+  //   margin-left: 1rem;
+  //   text-align: center;
+  //   border: 2px solid #007bff;
+  //
+  //   &:first-child {
+  //     margin-left: 0;
+  //   }
+  // }
 }
 
 .card-body {
