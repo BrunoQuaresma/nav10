@@ -1,9 +1,11 @@
-<div class="page-header">
-  <h1 class="page-header__title">Nova turma</h1>
+<div class="container py-4">
+  <div class="page-header">
+    <h1 class="page-header__title">Nova turma</h1>
 
-  <div class="page-header__actions">
-    <a href="<%= panel_groups_path %>" class="btn btn-light">Cancelar</a>
+    <div class="page-header__actions">
+      <a href="<%= panel_groups_path %>" class="btn btn-light">Cancelar</a>
+    </div>
   </div>
-</div>
 
-<%= render partial: 'form', locals: { group: @new_group, students: @students } %>
+  <%= render partial: 'form', locals: { group: @new_group, students: @students } %>
+</div>

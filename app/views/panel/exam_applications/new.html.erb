@@ -1,12 +1,15 @@
-<div class="page-header">
-  <h1 class="page-header__title">Nova aplicação</h1>
+<div class="container py-4">
+  <div class="page-header">
+    <h1 class="page-header__title">Nova aplicação</h1>
 
-  <div class="page-header__actions">
-    <a href="<%= panel_groups_path %>" class="btn btn-light">Cancelar</a>
+    <div class="page-header__actions">
+      <a href="<%= panel_groups_path %>" class="btn btn-light">Cancelar</a>
+    </div>
   </div>
-</div>
 
-<%= render partial: 'form', locals: {
-    exam_application: @new_exam_application,
-    groups: @groups,
-    exams: @exams } %>
+  <%= render partial: 'form', locals: {
+      exam_application: @new_exam_application,
+      groups: @groups,
+      exams: @exams } %>
+
+</div>

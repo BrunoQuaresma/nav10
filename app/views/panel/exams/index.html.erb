@@ -1,51 +1,53 @@
-<div class="page-header">
-  <h1 class="page-header__title">Simulados</h1>
+<div class="container py-4">
+  <div class="page-header">
+    <h1 class="page-header__title">Simulados</h1>
 
-  <div class="page-header__actions">
-    <% if current_user.teacher? %>
-      <a href="<%= new_panel_exam_path %>" class="btn btn-primary">Novo simulado</a>
-    <% end %>
+    <div class="page-header__actions">
+      <% if current_user.teacher? %>
+        <a href="<%= new_panel_exam_path %>" class="btn btn-primary">Novo simulado</a>
+      <% end %>
+    </div>
   </div>
-</div>
 
-<% if @exams.empty? %>
-  <div class="text-center">
-    <h3 class="text-muted">Nenhum simulado cadastrado</h3>
-  </div>
-<% end %>
+  <% if @exams.empty? %>
+    <div class="text-center">
+      <h3 class="text-muted">Nenhum simulado cadastrado</h3>
+    </div>
+  <% end %>
 
-<% @exams.each do |exam| %>
-  <div class="card mb-1">
-    <div class="card-body">
-      <div class="row align-items-center">
-        <div class="col h5 m-0">
-          <% if current_user.teacher? %>
-            <a href="<%= edit_panel_exam_path(exam) %>">
+  <% @exams.each do |exam| %>
+    <div class="card mb-1">
+      <div class="card-body">
+        <div class="row align-items-center">
+          <div class="col h5 m-0">
+            <% if current_user.teacher? %>
+              <a href="<%= edit_panel_exam_path(exam) %>">
+                <%= exam.title %>
+              </a>
+            <% else %>
               <%= exam.title %>
-            </a>
-          <% else %>
-            <%= exam.title %>
-          <% end %>
-        </div>
+            <% end %>
+          </div>
 
-        <div class="col">
-          <div>Duração</div>
-          <div><b><%= exam.duration_in_minutes %> minutos</b></div>
-        </div>
+          <div class="col">
+            <div>Duração</div>
+            <div><b><%= exam.duration_in_minutes %> minutos</b></div>
+          </div>
 
-        <div class="col">
-          <div>Questões</div>
-          <div><b><%= exam.exam_questions.count %></b></div>
-        </div>
+          <div class="col">
+            <div>Questões</div>
+            <div><b><%= exam.exam_questions.count %></b></div>
+          </div>
 
-        <div class="col-auto ml-auto">
-          <% if current_user.teacher? %>
-            <%= button_to "Excluir", panel_exam_path(exam), method: :delete, class: 'btn btn-sm btn-confirm', data: { confirm: 'Você tem certeza que deseja deletar este simulado?' } %>
-          <% else %>
-            <a href="<%= panel_student_exam_start_path(exam) %>" class="btn btn-primary">Iniciar</a>
-          <% end %>
+          <div class="col-auto ml-auto">
+            <% if current_user.teacher? %>
+              <%= button_to "Excluir", panel_exam_path(exam), method: :delete, class: 'btn btn-sm btn-confirm', data: { confirm: 'Você tem certeza que deseja deletar este simulado?' } %>
+            <% else %>
+              <a href="<%= panel_student_exam_start_path(exam) %>" class="btn btn-primary">Iniciar</a>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
+</div>

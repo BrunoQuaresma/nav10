@@ -1,32 +1,34 @@
-<div class="page-header">
-  <h1 class="page-header__title">Editar simulado</h1>
+<div class="container py-4">
+  <div class="page-header">
+    <h1 class="page-header__title">Editar simulado</h1>
 
-  <div class="page-header__actions">
-    <a href="<%= panel_exams_path %>" class="btn btn-light">Cancelar</a>
+    <div class="page-header__actions">
+      <a href="<%= panel_exams_path %>" class="btn btn-light">Cancelar</a>
+    </div>
   </div>
+
+  <%= form_for [:panel, @exam]  do |f| %>
+    <div class="row">
+      <div class="col-3">
+        <div class="form-group">
+          <label for="" class="required">Título</label>
+          <%= f.text_field :title, class: 'form-control', required: true %>
+        </div>
+
+        <div class="form-group">
+          <label for="" class="required">Duração</label>
+          <%= f.number_field :duration_in_minutes, class: 'form-control', required: true %>
+          <small class="form-text text-muted">
+            Tempo em minutos
+          </small>
+        </div>
+      </div>
+
+      <div class="col-9">
+        <h5 class="mb-4">Questões</h5>
+
+        <%= react_component('HelloNote', questions: @exam.exam_questions.as_json(include: :exam_question_options)) %>
+      </div>
+    </div>
+  <% end %>
 </div>
-
-<%= form_for [:panel, @exam]  do |f| %>
-  <div class="row">
-    <div class="col-3">
-      <div class="form-group">
-        <label for="" class="required">Título</label>
-        <%= f.text_field :title, class: 'form-control', required: true %>
-      </div>
-
-      <div class="form-group">
-        <label for="" class="required">Duração</label>
-        <%= f.number_field :duration_in_minutes, class: 'form-control', required: true %>
-        <small class="form-text text-muted">
-          Tempo em minutos
-        </small>
-      </div>
-    </div>
-
-    <div class="col-9">
-      <h5 class="mb-4">Questões</h5>
-
-      <%= react_component('HelloNote', questions: @exam.exam_questions.as_json(include: :exam_question_options)) %>
-    </div>
-  </div>
-<% end %>

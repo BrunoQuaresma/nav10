@@ -1,46 +1,48 @@
-<div class="page-header">
-  <h1 class="page-header__title">Aplicações</h1>
+<div class="container py-4">
+  <div class="page-header">
+    <h1 class="page-header__title">Aplicações</h1>
 
-  <div class="page-header__actions">
-    <a href="<%= new_panel_exam_application_path %>" class="btn btn-primary">Nova aplicação</a>
+    <div class="page-header__actions">
+      <a href="<%= new_panel_exam_application_path %>" class="btn btn-primary">Nova aplicação</a>
+    </div>
   </div>
-</div>
 
-<% if @exam_applications.empty? %>
-  <div class="text-center">
-    <h3 class="text-muted">Nenhuma aplicação cadastrada</h3>
-  </div>
-<% end %>
+  <% if @exam_applications.empty? %>
+    <div class="text-center">
+      <h3 class="text-muted">Nenhuma aplicação cadastrada</h3>
+    </div>
+  <% end %>
 
-<% @exam_applications.each do |exam_application| %>
-  <div class="card mb-1">
-    <div class="card-body">
-      <div class="row align-items-center">
-        <div class="col h5 m-0">
-          <a href="<%= edit_panel_exam_application_path(exam_application) %>">
-            <%= exam_application.id %>
-          </a>
-        </div>
+  <% @exam_applications.each do |exam_application| %>
+    <div class="card mb-1">
+      <div class="card-body">
+        <div class="row align-items-center">
+          <div class="col h5 m-0">
+            <a href="<%= edit_panel_exam_application_path(exam_application) %>">
+              <%= exam_application.id %>
+            </a>
+          </div>
 
-        <div class="col">
-          <div>Simulado</div>
-          <div><b><%= exam_application.exam.title %></b></div>
-        </div>
+          <div class="col">
+            <div>Simulado</div>
+            <div><b><%= exam_application.exam.title %></b></div>
+          </div>
 
-        <div class="col">
-          <div>Turma</div>
-          <div><b><%= exam_application.group.name %></b></div>
-        </div>
+          <div class="col">
+            <div>Turma</div>
+            <div><b><%= exam_application.group.name %></b></div>
+          </div>
 
-        <div class="col">
-          <div>Aplicado em</div>
-          <div><b><%= exam_application.created_at %></b></div>
-        </div>
+          <div class="col">
+            <div>Aplicado em</div>
+            <div><b><%= exam_application.created_at %></b></div>
+          </div>
 
-        <div class="col-auto ml-auto">
-          <%= button_to "Excluir", panel_exam_application_path(exam_application), method: :delete, class: 'btn btn-sm btn-confirm', data: { confirm: 'Você tem certeza que deseja deletar esta aplicação?' } %>
+          <div class="col-auto ml-auto">
+            <%= button_to "Excluir", panel_exam_application_path(exam_application), method: :delete, class: 'btn btn-sm btn-confirm', data: { confirm: 'Você tem certeza que deseja deletar esta aplicação?' } %>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
+</div>

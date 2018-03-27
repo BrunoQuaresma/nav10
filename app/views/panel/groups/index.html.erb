@@ -1,36 +1,38 @@
-<div class="page-header">
-  <h1 class="page-header__title">Turmas</h1>
+<div class="container py-4">
+  <div class="page-header">
+    <h1 class="page-header__title">Turmas</h1>
 
-  <div class="page-header__actions">
-    <a href="<%= new_panel_group_path %>" class="btn btn-primary">Nova turma</a>
+    <div class="page-header__actions">
+      <a href="<%= new_panel_group_path %>" class="btn btn-primary">Nova turma</a>
+    </div>
   </div>
-</div>
 
-<% if @groups.empty? %>
-  <div class="text-center">
-    <h3 class="text-muted">Nenhuma turma cadastrada</h3>
-  </div>
-<% end %>
+  <% if @groups.empty? %>
+    <div class="text-center">
+      <h3 class="text-muted">Nenhuma turma cadastrada</h3>
+    </div>
+  <% end %>
 
-<% @groups.each do |group| %>
-  <div class="card mb-1">
-    <div class="card-body">
-      <div class="row align-items-center">
-        <div class="col h5 m-0">
-          <a href="<%= edit_panel_group_path(group) %>">
-            <%= group.name %>
-          </a>
-        </div>
+  <% @groups.each do |group| %>
+    <div class="card mb-1">
+      <div class="card-body">
+        <div class="row align-items-center">
+          <div class="col h5 m-0">
+            <a href="<%= edit_panel_group_path(group) %>">
+              <%= group.name %>
+            </a>
+          </div>
 
-        <div class="col">
-          <div>Estudantes</div>
-          <div><b><%= group.users.count %></b></div>
-        </div>
+          <div class="col">
+            <div>Estudantes</div>
+            <div><b><%= group.users.count %></b></div>
+          </div>
 
-        <div class="col-auto ml-auto">
-          <%= button_to "Excluir", panel_group_path(group), method: :delete, class: 'btn btn-sm btn-confirm', data: { confirm: 'Você tem certeza que deseja deletar esta turma?' } %>
+          <div class="col-auto ml-auto">
+            <%= button_to "Excluir", panel_group_path(group), method: :delete, class: 'btn btn-sm btn-confirm', data: { confirm: 'Você tem certeza que deseja deletar esta turma?' } %>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
+</div>
