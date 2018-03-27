@@ -1,49 +1,51 @@
-<div class="page-header">
-  <h1 class="page-header__title">Estudantes</h1>
+<div class="container py-5">
+  <div class="page-header">
+    <h1 class="page-header__title">Estudantes</h1>
 
-  <div class="page-header__actions">
-    <a href="<%= new_panel_student_path %>" class="btn btn-primary">Novo estudante</a>
+    <div class="page-header__actions">
+      <a href="<%= new_panel_student_path %>" class="btn btn-primary">Novo estudante</a>
+    </div>
   </div>
-</div>
 
-<% if @students.empty? %>
-  <div class="text-center">
-    <h3 class="text-muted">Nenhum estudante cadastrado</h3>
-  </div>
-<% end %>
+  <% if @students.empty? %>
+    <div class="text-center">
+      <h3 class="text-muted">Nenhum estudante cadastrado</h3>
+    </div>
+  <% end %>
 
-<% @students.each do |student| %>
-  <div class="card mb-1">
-    <div class="card-body">
-      <div class="row align-items-center">
-        <div class="col h5 m-0">
-          <a href="<%= edit_panel_student_path(student) %>">
-            <%= student.name %>
-          </a>
-        </div>
-
-        <div class="col">
-          <div>E-mail</div>
-          <div><b><%= student.email %></b></div>
-        </div>
-
-        <div class="col">
-          <div>Turmas</div>
-          <div>
-            <% if student.groups.empty? %>
-              <b class="text-muted">Nenhuma</b>
-            <% end %>
-
-            <% student.groups.each do |group| %>
-              <div><b><%= group.name %></b></div>
-            <% end %>
+  <% @students.each do |student| %>
+    <div class="card mb-1">
+      <div class="card-body">
+        <div class="row align-items-center">
+          <div class="col h5 m-0">
+            <a href="<%= edit_panel_student_path(student) %>">
+              <%= student.name %>
+            </a>
           </div>
-        </div>
 
-        <div class="col-auto ml-auto">
-          <%= button_to "Excluir", panel_student_path(student), method: :delete, class: 'btn btn-sm btn-confirm', data: { confirm: 'Você tem certeza que deseja deletar este estudante?' } %>
+          <div class="col">
+            <div>E-mail</div>
+            <div><b><%= student.email %></b></div>
+          </div>
+
+          <div class="col">
+            <div>Turmas</div>
+            <div>
+              <% if student.groups.empty? %>
+                <b class="text-muted">Nenhuma</b>
+              <% end %>
+
+              <% student.groups.each do |group| %>
+                <div><b><%= group.name %></b></div>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="col-auto ml-auto">
+            <%= button_to "Excluir", panel_student_path(student), method: :delete, class: 'btn btn-sm btn-confirm', data: { confirm: 'Você tem certeza que deseja deletar este estudante?' } %>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
+</div>
