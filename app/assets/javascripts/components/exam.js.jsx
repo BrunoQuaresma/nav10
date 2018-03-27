@@ -14,7 +14,7 @@ class Exam extends React.Component {
     return (
       <div>
         <div className="exam-top">
-          <div className="exam-top__scroll">
+          <div className="exam-top__scroll px-3">
             <button>1</button>
             <button>2</button>
             <button>3</button>
@@ -100,11 +100,11 @@ class Exam extends React.Component {
 
     return (
       <div>
-        {!isFirstQuestion && <button onClick={this.goToPreviousQuestion.bind(this)} className="btn btn-light">Voltar</button>}
-        {!isAnswer && !isLastQuestion && <button onClick={this.jumpQuestion.bind(this)} className="btn btn-light">Pular questão</button>}
-        {isAnswer && !isLastQuestion && <button onClick={this.goToNextQuestion.bind(this)} className="btn btn-primary">Ir para próxima</button>}
-        {isLastQuestion && !isAnswer && <button className="btn btn-secondary">Finalizar</button>}
-        {isLastQuestion && isAnswer && <button className="btn btn-primary">Responder e finalizar</button>}
+        {isLastQuestion && isAnswer && <button className="btn btn-block btn-lg btn-primary">Responder e finalizar</button>}
+        {isAnswer && !isLastQuestion && <button onClick={this.goToNextQuestion.bind(this)} className="btn btn-block btn-lg btn-primary">Ir para próxima</button>}
+        {!isFirstQuestion && <button onClick={this.goToPreviousQuestion.bind(this)} className="btn btn-block btn-lg btn-light">Voltar</button>}
+        {!isAnswer && !isLastQuestion && <button onClick={this.jumpQuestion.bind(this)} className="btn btn-block btn-lg btn-light">Pular questão</button>}
+        {isLastQuestion && !isAnswer && <button className="btn btn-block btn-lg btn-secondary">Finalizar</button>}
       </div>
     )
   }

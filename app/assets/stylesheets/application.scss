@@ -52,6 +52,10 @@ body, html {
     border-radius: 100%;
     background: #CCC;
     margin-left: 1rem;
+
+    &:first-child {
+      margin-left: 0;
+    }
   }
 }
 
