@@ -19,6 +19,7 @@ class Panel::ExamApplicationsController < PanelController
 
   def show
     @exam_application = ExamApplication.find(params[:id])
+    @students = @exam_application.users
   end
 
   def create

@@ -7,7 +7,7 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row mb-4">
     <div class="col-md-3">
       <div class="card">
         <div class="card-body">
@@ -20,10 +20,35 @@
     <div class="col-md-3">
       <div class="card">
         <div class="card-body">
-          <div class="display-4"><%= number_with_precision(@exam_application.medium_time_count_in_seconds / 60, precision: 2) %></div>
+          <div class="display-4"><%= print_time_in_minutes(@exam_application.medium_time_count_in_seconds) %></div>
           <div>Tempo médio em minutos</div>
         </div>
       </div>
     </div>
   </div>
+
+
+  <% @students.each do |student| %>
+    <div class="card mb-1">
+      <div class="card-body">
+        <div class="row align-items-center">
+          <div class="col h5 m-0">
+            <a href="<%= panel_student_exam_history_path(@exam_application, user_id: student.id) %>">
+              <%= student.name %>
+            </a>
+          </div>
+
+          <div class="col">
+            <div>Tempo total</div>
+            <div><b><%= number_with_precision(student.total_time / 60, precision: 2) %> minutos</b></div>
+          </div>
+
+          <!-- <div class="col">
+            <div>Acerto</div>
+            <div><b>223</b></div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  <% end %>
 </div>

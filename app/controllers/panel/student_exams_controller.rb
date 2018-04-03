@@ -20,6 +20,15 @@ class Panel::StudentExamsController < PanelController
     head :ok
   end
 
+  def all_history
+    @exam_application = ExamApplication.find(params[:student_exam_id])
+
+    @history = ExamApplicationHistory.where(
+      user_id: params[:user_id],
+      exam_application_id: params[:student_exam_id]
+    )
+  end
+
   private
 
   def history_params

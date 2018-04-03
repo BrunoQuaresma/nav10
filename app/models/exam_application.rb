@@ -2,7 +2,7 @@ class ExamApplication < ApplicationRecord
   belongs_to :exam
   belongs_to :group
 
-  has_many :exam_application_histories
+  has_many :exam_application_histories, dependent: :destroy
 
   def finished_by_user? user
     exam_application_histories.where(user_id: user.id).count > 0
@@ -24,5 +24,23 @@ class ExamApplication < ApplicationRecord
     end
 
     times.size > 0 ? times.sum / times.size : 0
+  end
+
+  def users
+    exam_application_histories.group_by(&:user_id).map do |user_histories|
+      histories = user_histories[1]
+      user = histories[0].user
+
+      start_time = histories.find{|h| h.event == 'start'}.created_at
+      end_time = histories.find{|h| h.event == 'finish'}.created_at
+
+      total_time = end_time - start_time
+
+      OpenStruct.new({
+        id: user.id,
+        name: user.name,
+        total_time: total_time
+      })
+    end
   end
 end
