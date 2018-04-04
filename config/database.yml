@@ -79,7 +79,8 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  <<: *default
-  database: nav10_production
-  username: nav10
-  password: <%= ENV['NAV10_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
+  # <<: *default
+  # database: nav10_production
+  # username: nav10
+  # password: <%= ENV['NAV10_DATABASE_PASSWORD'] %>
