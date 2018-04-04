@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  exam_application: one
+  logs: 
+  answers: 
+
+two:
+  user: two
+  exam_application: two
+  logs: 
+  answers: 

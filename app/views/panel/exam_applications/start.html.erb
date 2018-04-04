@@ -1,0 +1,15 @@
+<%= react_component(
+  'Exam',
+  exam_application: @exam_application.as_json(
+    include: {
+      exam: {
+        include: {
+          exam_questions: {
+            include: :exam_question_options
+          }
+        }
+      }
+    }
+  )
+)
+%>

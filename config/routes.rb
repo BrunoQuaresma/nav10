@@ -5,10 +5,13 @@ Rails.application.routes.draw do
     resources :students
     resources :exams
     resources :groups
-    resources :exam_applications
+    resources :exam_applications do
+      get 'start'
+
+      resources :user_answers
+    end
 
     resources :student_exams do
-      get '/start', to: 'student_exams#start'
       post '/history', to: 'student_exams#history'
       get '/history', to: 'student_exams#all_history'
     end

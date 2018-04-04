@@ -2,6 +2,8 @@ class Exam extends React.Component {
   constructor(props) {
     super(props)
 
+    this.logs = []
+
     this.state = {
       wasStarted: false,
       currentQuesitonIndex: 0,
@@ -52,7 +54,7 @@ class Exam extends React.Component {
       <div>
         <div className="exam-top">
           <div className="exam-top__scroll">
-            {this.props.questions.map((question, index) => {
+            {this.questions().map((question, index) => {
               const className = `
                 ${index === this.state.currentQuesitonIndex ? 'active' : ''}
                 ${this.isQuestionComplete(index) ? 'complete' : ''}
@@ -71,7 +73,7 @@ class Exam extends React.Component {
   }
 
   renderQuestion(currentQuestion) {
-    this.sendHistory({
+    this.log({
       event: 'see',
       subject: 'question',
       subject_id: currentQuestion.id
@@ -100,11 +102,17 @@ class Exam extends React.Component {
     )
   }
 
+  questions() {
+    return this.props.exam_application
+                     .exam
+                     .exam_questions
+  }
+
   start() {
-    this.sendHistory({
+    this.log({
       event: 'start',
       subject: 'exam',
-      subject_id: this.props.questions[0].exam_id
+      subject_id: this.questions()[0].exam_id
     })
 
     this.setState({
@@ -115,10 +123,10 @@ class Exam extends React.Component {
   answerCurrentQuestion(index) {
     const { currentQuesitonIndex, questionAnswers } = this.state
 
-    this.sendHistory({
+    this.log({
       event: 'select',
-      subject: 'question',
-      subject_id: this.getCurrentQuestion().id
+      subject: 'option',
+      subject_id: `${this.getCurrentQuestion().id}_${index}`
     })
 
     this.setState({
@@ -141,11 +149,11 @@ class Exam extends React.Component {
   }
 
   getCurrentQuestion() {
-    return this.props.questions[this.state.currentQuesitonIndex];
+    return this.questions()[this.state.currentQuesitonIndex];
   }
 
   isLastQuestion() {
-    const totalQuestionsCount = this.props.questions.length;
+    const totalQuestionsCount = this.questions().length;
     const lastQuestionsIndex = totalQuestionsCount - 1;
 
     return this.state.currentQuesitonIndex === lastQuestionsIndex;
@@ -185,15 +193,18 @@ class Exam extends React.Component {
   }
 
   finish() {
-    this.setState({
-      finishLoading: true
-    })
+    const { id } = this.props.exam_application
 
-    this.sendHistory({
-      event: 'finish',
-      subject: 'exam',
-      subject_id: this.props.questions[0].exam_id
-    }).then(() => {
+    this.setState({ finishLoading: true })
+    this.log({ event: 'finish' })
+
+    const requestUrl = `/panel/exam_applications/${id}/user_answers`;
+
+    $.post(requestUrl, {
+      logs: this.logs,
+      answers: this.state.questionAnswers
+    })
+    .then(() => {
       this.setState({
         finishLoading: false,
         finished: true
@@ -201,14 +212,14 @@ class Exam extends React.Component {
     })
   }
 
-  sendHistory(history) {
-    const url = '/panel/student_exams/' + this.props.questions[0].exam_id + '/history';
+  log(log) {
+    log.time = new Date();
 
-    return $.post(url, { history })
+    this.logs.push(log);
   }
 
   jumpQuestion() {
-    this.sendHistory({
+    this.log({
       event: 'jump',
       subject: 'question',
       subject_id: this.getCurrentQuestion().id
@@ -218,7 +229,7 @@ class Exam extends React.Component {
   }
 
   goToNextQuestion() {
-    this.sendHistory({
+    this.log({
       event: 'go_to_next',
       subject: 'question',
       subject_id: this.getCurrentQuestion().id
@@ -230,7 +241,7 @@ class Exam extends React.Component {
   }
 
   goToPreviousQuestion() {
-    this.sendHistory({
+    this.log({
       event: 'go_to_previous',
       subject: 'question',
       subject_id: this.getCurrentQuestion().id
@@ -242,7 +253,7 @@ class Exam extends React.Component {
   }
 
   goToQuestion(index) {
-    this.sendHistory({
+    this.log({
       event: 'go_to',
       subject: 'question',
       subject_id: this.getCurrentQuestion().id

@@ -2,26 +2,18 @@ class ExamApplication < ApplicationRecord
   belongs_to :exam
   belongs_to :group
 
-  has_many :exam_application_histories, dependent: :destroy
+  has_many :user_answers, dependent: :destroy
 
   def finished_by_user? user
-    exam_application_histories.where(user_id: user.id).count > 0
+    user_answers.where(user_id: user.id).count > 0
   end
 
   def users_done_count
-    exam_application_histories.where(
-      event: 'start',
-      subject: 'exam'
-    ).count
+    user_answers.count
   end
 
   def medium_time_count_in_seconds
-    times = exam_application_histories.group_by(&:user_id).map do |user_histories|
-      start_time = user_histories[1].find{|h| h.event == 'start'}.created_at
-      end_time = user_histories[1].find{|h| h.event == 'finish'}.created_at
-
-      end_time - start_time
-    end
+    times = user_answers.map(&:total_time)
 
     times.size > 0 ? times.sum / times.size : 0
   end

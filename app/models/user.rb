@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_many :exams
   has_many :exam_application_histories
   has_many :exam_applications, through: :groups
+  has_many :user_answers
 
   def teacher?
     role == "teacher"

@@ -3,7 +3,12 @@
     <h1 class="page-header__title">Histórico</h1>
 
     <div class="page-header__actions">
-      <a href="<%= panel_exam_applications_path %>" class="btn btn-light">Cancelar</a>
+      <a
+        href="<%= panel_exam_applications_path(@user_answer.exam_application_id) %>"
+        class="btn btn-light"
+      >
+        Cancelar
+      </a>
     </div>
   </div>
 
@@ -12,7 +17,7 @@
       <div class="card">
         <div class="card-body">
           <b>Estudante</b>
-          <div><%= @history.first.user.name %></div>
+          <div><%= @user_answer.user.name %></div>
         </div>
       </div>
     </div>
@@ -21,23 +26,14 @@
       <div class="card">
         <div class="card-body">
           <b>Exame</b>
-          <div><%= @history.first.exam_application.exam.title %></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="card">
-        <div class="card-body">
-          <b>Aplicação</b>
-          <div><%= @exam_application.id %></div>
+          <div><%= @user_answer.exam_application.exam.title %></div>
         </div>
       </div>
     </div>
   </div>
 
   <ul class="timeline">
-    <% @history.each do |log| %>
+    <% @user_answer.logs.each do |log| %>
       <li>
         <div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div>
         <div class="timeline-panel">
@@ -46,26 +42,21 @@
               <%= print_log(log) %>
             </h4>
 
-            <% if log.subject == 'question' %>
-              <p class="mb-1 font-weight-bold">
+            <% if log['subject'] == 'question' %>
+              <p class="mb-1">
                 <%= print_log_question_description(log) %>
               </p>
             <% end %>
 
-            <% if log.subject == 'exam' %>
-              <p class="mb-1 font-weight-bold">
-                <%= print_log_exam_description(log) %>
+            <% if log['event'] == 'select' %>
+              <p class="mb-1">
+                <%= print_log_select_description(log) %>
               </p>
             <% end %>
 
-            <% if log.event == 'see' %>
-              <p class="mb-0">
-                Visualizou por
-                <% if log.event_duration_in_seconds > 60 %>
-                  <%= print_time_in_minutes(log.event_duration_in_seconds) %> minutos
-                <% else %>
-                  <%= print_time(log.event_duration_in_seconds) %> segundos
-                <% end %>
+            <% if log['event'] == 'see' %>
+              <p class="mb-1">
+                Duração: <%= print_time(@user_answer.event_duration(log)) %>
               </p>
             <% end %>
           </div>

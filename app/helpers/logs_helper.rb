@@ -1,19 +1,22 @@
 module LogsHelper
   def print_log log
     "#{print_log_event_name(log)} \
-     #{print_log_subject_name(log)}:".capitalize
+     #{print_log_subject_name(log)}".capitalize
   end
 
   def print_log_question_description log
-    question = ExamQuestion.find(log.subject_id)
+    question = ExamQuestion.find(log['subject_id'])
 
     question.description
   end
 
-  def print_log_exam_description log
-    exam = Exam.find(log.subject_id)
+  def print_log_select_description log
+    question_id, option_index = log['subject_id'].split('_')
 
-    exam.title
+    question = ExamQuestion.find(question_id)
+    option = question.exam_question_options[option_index.to_i]
+
+    "#{option.title} da questão #{question.description}"
   end
 
   private
@@ -28,7 +31,7 @@ module LogsHelper
       'finish': 'finalizou'
     }
 
-    event_names[log.event.to_sym]
+    event_names[log['event'].to_sym]
   end
 
   def print_log_subject_name log
@@ -37,6 +40,6 @@ module LogsHelper
       'exam': 'o exame'
     }
 
-    subject_names[log.subject.to_sym]
+    subject_names[log['subject'].to_sym] if log['subject'].present?
   end
 end

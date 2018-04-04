@@ -28,25 +28,20 @@
   </div>
 
 
-  <% @students.each do |student| %>
+  <% @exam_application.user_answers.each do |user_answer| %>
     <div class="card mb-1">
       <div class="card-body">
         <div class="row align-items-center">
           <div class="col h5 m-0">
-            <a href="<%= panel_student_exam_history_path(@exam_application, user_id: student.id) %>">
-              <%= student.name %>
+            <a href="<%= panel_exam_application_user_answer_path(user_answer.exam_application, user_answer) %>">
+              <%= user_answer.user.name %>
             </a>
           </div>
 
           <div class="col">
             <div>Tempo total</div>
-            <div><b><%= number_with_precision(student.total_time / 60, precision: 2) %> minutos</b></div>
+            <div><b><%= print_time_in_minutes(user_answer.total_time) %> minutos</b></div>
           </div>
-
-          <!-- <div class="col">
-            <div>Acerto</div>
-            <div><b>223</b></div>
-          </div> -->
         </div>
       </div>
     </div>

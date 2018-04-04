@@ -1,6 +1,16 @@
 class Panel::ExamApplicationsController < PanelController
   def index
-    @exam_applications = ExamApplication.all
+    if current_user.teacher?
+      @exam_applications = ExamApplication.all
+    else
+      @exam_applications = current_user.exam_applications
+    end
+  end
+
+  def start
+    @exam_application = current_user
+                          .exam_applications
+                          .find(params[:exam_application_id])
   end
 
   def new
@@ -19,7 +29,6 @@ class Panel::ExamApplicationsController < PanelController
 
   def show
     @exam_application = ExamApplication.find(params[:id])
-    @students = @exam_application.users
   end
 
   def create
