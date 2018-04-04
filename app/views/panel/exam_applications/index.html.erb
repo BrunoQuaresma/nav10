@@ -41,7 +41,7 @@
 
           <div class="col">
             <div>Aplicado em</div>
-            <div><b><%= exam_application.created_at %></b></div>
+            <div><b><%= exam_application.created_at.strftime("%d/%m/%Y") %></b></div>
           </div>
 
           <div class="col-auto ml-auto d-flex">
