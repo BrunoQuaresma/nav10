@@ -1,0 +1,63 @@
+<div class="container py-4">
+  <div class="page-header">
+    <h1 class="page-header__title">
+      Aplicação <%= @exam_application.id %>
+    </h1>
+
+    <div class="page-header__actions">
+      <a href="<%= panel_exam_applications_path %>" class="btn btn-light">Voltar</a>
+    </div>
+  </div>
+
+  <div class="py-4">
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <a class="nav-link" href="<%= panel_exam_application_path(@exam_application) %>">Respostas</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link active" href="<%= panel_exam_application_question_analysis_path(@exam_application) %>">Análise de questões</a>
+      </li>
+    </ul>
+  </div>
+
+  <% @questions.each_with_index do |question, question_index| %>
+    <div class="card mb-2">
+      <div class="p-4">
+        <div class="row">
+          <div class="col-6">
+            <div><b>QUESTÃO</b></div>
+            <p class="lead m-0"><%= question.description %></p>
+          </div>
+
+          <div class="col-6">
+            <div class="row">
+              <div class="col-4 font-weight-bold text-muted">OPÇÃO</div>
+              <div class="col-4 font-weight-bold text-muted">SELECIONADOS</div>
+              <div class="col-4 font-weight-bold text-muted">PORCENTAGEM</div>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <% question.exam_question_options.each_with_index do |option, option_index| %>
+                  <div class="py-3 <%= option_index == question.right_option_index.to_i ? 'text-success font-weight-bold' : ''  %>"><%= option.title %></div>
+                <% end %>
+              </div>
+
+              <div class="col-4">
+                <% question.exam_question_options.each_with_index do |option, option_index| %>
+                  <div class="py-3 <%= option_index == question.right_option_index.to_i ? 'text-success font-weight-bold' : ''  %>"><%= @exam_application.count_option_choices(question_index, option_index) %></div>
+                <% end %>
+              </div>
+
+              <div class="col-4">
+                <% question.exam_question_options.each_with_index do |option, option_index| %>
+                  <div class="py-3 <%= option_index == question.right_option_index.to_i ? 'text-success font-weight-bold' : ''  %>"><%= @exam_application.count_option_choices_percentage(question_index, option_index) %>%</div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

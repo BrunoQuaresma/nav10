@@ -8,9 +8,12 @@ class Panel::ExamApplicationsController < PanelController
   end
 
   def start
-    @exam_application = current_user
-                          .exam_applications
-                          .find(params[:exam_application_id])
+    @exam_application = ExamApplication.find(params[:exam_application_id])
+  end
+
+  def question_analysis
+    @exam_application = ExamApplication.find(params[:exam_application_id])
+    @questions = @exam_application.exam.exam_questions
   end
 
   def new

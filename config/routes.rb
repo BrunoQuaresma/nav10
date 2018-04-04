@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     resources :groups
     resources :exam_applications do
       get 'start'
+      get 'question_analysis'
 
       resources :user_answers
     end

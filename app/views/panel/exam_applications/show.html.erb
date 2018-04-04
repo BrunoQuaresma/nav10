@@ -3,8 +3,20 @@
     <h1 class="page-header__title">Aplicação <%= @exam_application.id %></h1>
 
     <div class="page-header__actions">
-      <a href="<%= panel_exam_applications_path %>" class="btn btn-light">Cancelar</a>
+      <a href="<%= panel_exam_applications_path %>" class="btn btn-light">Voltar</a>
     </div>
+  </div>
+
+  <div class="py-4">
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <a class="nav-link active" href="<%= panel_exam_application_path(@exam_application) %>">Respostas</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="<%= panel_exam_application_question_analysis_path(@exam_application) %>">Análise de questões</a>
+      </li>
+    </ul>
   </div>
 
   <div class="row mb-4">

@@ -12,6 +12,18 @@ class ExamApplication < ApplicationRecord
     user_answers.count
   end
 
+  def count_option_choices_percentage(question_index, option_index)
+    count_option_choices(question_index, option_index).to_f / user_answers.count * 100.0 if user_answers.count > 0
+  end
+
+  def count_option_choices(question_index, option_index)
+    user_answers.map do |user_answer|
+      user_answer.answers.select do |question_i, option_i|
+        option_i.to_i == option_index && question_i.to_i == question_index
+      end.count
+    end.sum
+  end
+
   def medium_time_count_in_seconds
     times = user_answers.map(&:total_time)
 
