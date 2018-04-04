@@ -18,6 +18,12 @@ class ExamApplication < ApplicationRecord
     times.size > 0 ? times.sum / times.size : 0
   end
 
+  def medium_correctness_percentage
+    percentages = user_answers.map(&:correctness_percentage)
+
+    percentages.size > 0 ? percentages.sum / percentages.size : 0
+  end
+
   def users
     exam_application_histories.group_by(&:user_id).map do |user_histories|
       histories = user_histories[1]

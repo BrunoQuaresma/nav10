@@ -25,6 +25,15 @@
         </div>
       </div>
     </div>
+
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="display-4"><%= @exam_application.medium_correctness_percentage %>%</div>
+          <div>Média de acertos</div>
+        </div>
+      </div>
+    </div>
   </div>
 
 
@@ -41,6 +50,11 @@
           <div class="col">
             <div>Tempo total</div>
             <div><b><%= print_time_in_minutes(user_answer.total_time) %> minutos</b></div>
+          </div>
+
+          <div class="col">
+            <div>Acertos</div>
+            <div><b><%= user_answer.correctness_percentage %>%</b></div>
           </div>
         </div>
       </div>

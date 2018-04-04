@@ -29,7 +29,7 @@ class Exam extends React.Component {
         <div className="container text-center py-5">
           <h1 className="mb-4">Você finalizou o simulado!</h1>
 
-          <a href="/panel/student_exams/" className="btn btn-primary btn-lg btn-block">
+          <a href="/panel/exam_applications" className="btn btn-primary btn-lg btn-block">
             Ir para página inicial
           </a>
         </div>
@@ -44,7 +44,7 @@ class Exam extends React.Component {
             Após o início do exame ele não poderá ser interrompido até sua finalização
             ou limite de tempo.
           </p>
-          <a href="/panel/student_exams/" className="btn btn-light btn-lg btn-block">Voltar</a>
+          <a href="/panel/exam_applications" className="btn btn-light btn-lg btn-block">Voltar</a>
           <button onClick={this.start.bind(this)} className="btn btn-primary btn-lg btn-block">Ok, começar agora</button>
         </div>
       )
@@ -198,13 +198,13 @@ class Exam extends React.Component {
     this.setState({ finishLoading: true })
     this.log({ event: 'finish' })
 
-    const requestUrl = `/panel/exam_applications/${id}/user_answers`;
+    const requestUrl = `/panel/exam_applications/${id}/user_answers.json`;
 
     $.post(requestUrl, {
       logs: this.logs,
       answers: this.state.questionAnswers
     })
-    .then(() => {
+    .always(() => {
       this.setState({
         finishLoading: false,
         finished: true
