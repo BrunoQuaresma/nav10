@@ -16,5 +16,9 @@ Rails.application.routes.draw do
       post '/history', to: 'student_exams#history'
       get '/history', to: 'student_exams#all_history'
     end
+
+    root 'exam_applications#index'
   end
+
+  root 'panel/exam_applications#index'
 end

@@ -9,7 +9,8 @@ class Exam extends React.Component {
       currentQuesitonIndex: 0,
       questionAnswers: {},
       finishLoading: false,
-      finished: false
+      finished: false,
+      screen: 'all'
     }
   }
 
@@ -50,29 +51,34 @@ class Exam extends React.Component {
       )
     }
 
-    return (
-      <div>
-        <div className="exam-top">
-          <div className="exam-top__scroll">
-            {this.questions().map((question, index) => {
-              const className = `
-                ${index === this.state.currentQuesitonIndex ? 'active' : ''}
-                ${this.isQuestionComplete(index) ? 'complete' : ''}
-              `
-
-              return (
-                <button onClick={this.goToQuestion.bind(this, index)} className={className} key={index}>{index + 1}</button>
-              )
-            })}
+    if(this.state.screen === 'all') {
+      return (
+        <div className="container py-3">
+          <div className="row mb-5">
+            {this.questions().map((question, index) => (
+              <div className="col-4" key={index}>
+                <div className={`card mb-3 ${this.isAnswer(index) ? 'bg-primary text-white' : ''}`} onClick={this.goToQuestion.bind(this, index)}>
+                  <div className="p-3 text-center">
+                    {index + 1}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
-        </div>
 
-        {this.renderQuestion(currentQuestion)}
-      </div>
-    )
+          <button onClick={this.finish.bind(this)} className="btn btn-lg btn-primary btn-block">
+            Enviar gabarito
+          </button>
+        </div>
+      )
+    }
+
+    return this.renderCurrentQuestion()
   }
 
-  renderQuestion(currentQuestion) {
+  renderCurrentQuestion() {
+    const currentQuestion = this.getCurrentQuestion()
+
     this.log({
       event: 'see',
       subject: 'question',
@@ -80,10 +86,9 @@ class Exam extends React.Component {
     })
 
     return (
-      <div className="container py-5">
-        <h3 className="mb-4">{currentQuestion.description}</h3>
-
+      <div className="container py-3">
         <div className="mb-3">
+          <h3 className="mb-3">Questão #{this.state.currentQuesitonIndex + 1}</h3>
           {currentQuestion.exam_question_options.map((option, index) => (
             <div
               className={this.getOptionClassName(index)}
@@ -137,6 +142,10 @@ class Exam extends React.Component {
     })
   }
 
+  isAnswer(questionIndex) {
+    return this.state.questionAnswers[questionIndex] !== undefined
+  }
+
   getOptionClassName(index) {
     const currentQuestionAnswer = this.getCurrentQuestionAnswer();
     const isOptionSelected = currentQuestionAnswer === index;
@@ -183,16 +192,28 @@ class Exam extends React.Component {
 
     return (
       <div>
-        {isLastQuestion && isAnswer && <button className="btn btn-block btn-lg btn-primary" onClick={this.finish.bind(this)}>Finalizar</button>}
-        {isAnswer && !isLastQuestion && <button onClick={this.goToNextQuestion.bind(this)} className="btn btn-block btn-lg btn-primary">Ir para próxima</button>}
-        {!isFirstQuestion && <button onClick={this.goToPreviousQuestion.bind(this)} className="btn btn-block btn-lg btn-light">Voltar</button>}
-        {!isAnswer && !isLastQuestion && <button onClick={this.jumpQuestion.bind(this)} className="btn btn-block btn-lg btn-light">Pular questão</button>}
-        {isLastQuestion && !isAnswer && <button className="btn btn-block btn-lg btn-secondary" onClick={this.finish.bind(this)}>Finalizar</button>}
+        {!isAnswer && <button className="btn btn-block btn-lg btn-light" onClick={this.showAll.bind(this)}>Voltar</button>}
+        {isAnswer && <button onClick={this.showAll.bind(this)} className="btn btn-block btn-lg btn-primary">Marcar questão</button>}
       </div>
     )
   }
 
+  showAll() {
+    this.log({
+      event: 'see',
+      subject: 'all'
+    })
+
+    this.setState({
+      screen: 'all'
+    })
+  }
+
   finish() {
+    if(!confirm('Você deseja entregar o gabarito?')) {
+      return;
+    }
+
     const { id } = this.props.exam_application
 
     this.setState({ finishLoading: true })
@@ -260,7 +281,8 @@ class Exam extends React.Component {
     })
 
     this.setState({
-      currentQuesitonIndex: index
+      currentQuesitonIndex: index,
+      screen: 'question'
     })
   }
 }

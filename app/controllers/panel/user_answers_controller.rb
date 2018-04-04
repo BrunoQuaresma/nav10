@@ -6,7 +6,7 @@ class Panel::UserAnswersController < PanelController
       answers: params[:answers]
     )
 
-    render status: 200
+    head :ok
   end
 
   def show

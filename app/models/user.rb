@@ -15,4 +15,8 @@ class User < ApplicationRecord
   def teacher?
     role == "teacher"
   end
+
+  def answered?(exam_application)
+    exam_application.user_answers.where(user_id: id).count > 0
+  end
 end
