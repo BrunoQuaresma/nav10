@@ -5,13 +5,12 @@ class Exam extends React.Component {
     this.logs = []
 
     this.state = {
-      wasStarted: true,
+      wasStarted: false,
       currentQuesitonIndex: 0,
       questionAnswers: {},
       finishLoading: false,
       finished: false,
-      //screen: 'showQuestions'
-      screen: 'showQuestion'
+      screen: 'showQuestions'
     }
   }
 
