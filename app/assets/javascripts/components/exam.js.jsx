@@ -5,18 +5,17 @@ class Exam extends React.Component {
     this.logs = []
 
     this.state = {
-      wasStarted: false,
+      wasStarted: true,
       currentQuesitonIndex: 0,
       questionAnswers: {},
       finishLoading: false,
       finished: false,
-      screen: 'all'
+      //screen: 'showQuestions'
+      screen: 'showQuestion'
     }
   }
 
   render() {
-    const currentQuestion = this.getCurrentQuestion();
-
     if(this.state.finishLoading) {
       return (
         <div className="container text-center py-5">
@@ -51,11 +50,13 @@ class Exam extends React.Component {
       )
     }
 
-    if(this.state.screen === 'all') {
+    if(this.state.screen === 'showQuestions') {
+      const exam = this.getExam();
+
       return (
         <div className="container py-3">
           <div className="row mb-5">
-            {this.questions().map((question, index) => (
+            {Array(exam.number_of_questions).fill().map((v, index) => (
               <div className="col-4" key={index}>
                 <div className={`card mb-3 ${this.isAnswer(index) ? 'bg-primary text-white' : ''}`} onClick={this.goToQuestion.bind(this, index)}>
                   <div className="p-3 text-center">
@@ -77,26 +78,28 @@ class Exam extends React.Component {
   }
 
   renderCurrentQuestion() {
-    const currentQuestion = this.getCurrentQuestion()
+    const exam = this.getExam();
+    const questionIndex = this.state.currentQuesitonIndex;
+    const letterOptions = ['A', 'B', 'C', 'D', 'E', 'F'];
 
     this.log({
       event: 'see',
       subject: 'question',
-      subject_id: currentQuestion.id
+      index: questionIndex
     })
 
     return (
       <div className="container py-3">
         <div className="mb-3">
-          <h3 className="mb-3">Questão #{this.state.currentQuesitonIndex + 1}</h3>
-          {currentQuestion.exam_question_options.map((option, index) => (
+          <h3 className="mb-3">Questão #{questionIndex + 1}</h3>
+          {Array(exam.number_of_options).fill().map((v, index) => (
             <div
               className={this.getOptionClassName(index)}
               key={index}
               onClick={this.answerCurrentQuestion.bind(this, index)}
             >
               <div className="card-body">
-                {option.title}
+                {letterOptions[index]}
               </div>
             </div>
           ))}
@@ -107,17 +110,42 @@ class Exam extends React.Component {
     )
   }
 
-  questions() {
-    return this.props.exam_application
-                     .exam
-                     .exam_questions
+  getOptionClassName(index) {
+    const currentQuestionAnswer = this.getCurrentQuestionAnswer();
+    const isOptionSelected = currentQuestionAnswer === index;
+
+    return `
+      card
+      mb-2
+      ${isOptionSelected ? 'bg-primary text-white' : ''}
+    `
+  }
+
+  renderDefaultActions() {
+    const currentQuestionAnswer = this.getCurrentQuestionAnswer()
+    const isAnswer = currentQuestionAnswer !== undefined
+
+    return (
+      <div>
+        {!isAnswer && <button className="btn btn-block btn-lg btn-light" onClick={this.showAll.bind(this)}>Voltar</button>}
+        {isAnswer && <button onClick={this.showAll.bind(this)} className="btn btn-block btn-lg btn-primary">Marcar questão</button>}
+      </div>
+    )
+  }
+
+  getCurrentQuestionAnswer() {
+    const { questionAnswers, currentQuesitonIndex } = this.state;
+
+    return questionAnswers[currentQuesitonIndex];
   }
 
   start() {
+    const exam = this.getExam();
+
     this.log({
       event: 'start',
       subject: 'exam',
-      subject_id: this.questions()[0].exam_id
+      subject_id: exam.id
     })
 
     this.setState({
@@ -131,7 +159,7 @@ class Exam extends React.Component {
     this.log({
       event: 'select',
       subject: 'option',
-      subject_id: `${this.getCurrentQuestion().id}_${index}`
+      index: `${currentQuesitonIndex}_${index}`
     })
 
     this.setState({
@@ -146,36 +174,8 @@ class Exam extends React.Component {
     return this.state.questionAnswers[questionIndex] !== undefined
   }
 
-  getOptionClassName(index) {
-    const currentQuestionAnswer = this.getCurrentQuestionAnswer();
-    const isOptionSelected = currentQuestionAnswer === index;
-
-    return `
-      card
-      mb-2
-      ${isOptionSelected ? 'bg-primary text-white' : ''}
-    `
-  }
-
-  getCurrentQuestion() {
-    return this.questions()[this.state.currentQuesitonIndex];
-  }
-
-  isLastQuestion() {
-    const totalQuestionsCount = this.questions().length;
-    const lastQuestionsIndex = totalQuestionsCount - 1;
-
-    return this.state.currentQuesitonIndex === lastQuestionsIndex;
-  }
-
-  isFirstQuestion() {
-    return this.state.currentQuesitonIndex === 0;
-  }
-
-  getCurrentQuestionAnswer() {
-    const { questionAnswers, currentQuesitonIndex } = this.state;
-
-    return questionAnswers[currentQuesitonIndex];
+  getExam() {
+    return this.props.exam_application.exam;
   }
 
   isQuestionComplete(index) {
@@ -184,28 +184,14 @@ class Exam extends React.Component {
     return questionAnswers[index] !== undefined;
   }
 
-  renderDefaultActions() {
-    const currentQuestionAnswer = this.getCurrentQuestionAnswer()
-    const isAnswer = currentQuestionAnswer !== undefined
-    const isLastQuestion = this.isLastQuestion()
-    const isFirstQuestion = this.isFirstQuestion()
-
-    return (
-      <div>
-        {!isAnswer && <button className="btn btn-block btn-lg btn-light" onClick={this.showAll.bind(this)}>Voltar</button>}
-        {isAnswer && <button onClick={this.showAll.bind(this)} className="btn btn-block btn-lg btn-primary">Marcar questão</button>}
-      </div>
-    )
-  }
-
   showAll() {
     this.log({
       event: 'see',
-      subject: 'all'
+      subject: 'showQuestions'
     })
 
     this.setState({
-      screen: 'all'
+      screen: 'showQuestions'
     })
   }
 
@@ -239,45 +225,11 @@ class Exam extends React.Component {
     this.logs.push(log);
   }
 
-  jumpQuestion() {
-    this.log({
-      event: 'jump',
-      subject: 'question',
-      subject_id: this.getCurrentQuestion().id
-    })
-
-    this.goToNextQuestion();
-  }
-
-  goToNextQuestion() {
-    this.log({
-      event: 'go_to_next',
-      subject: 'question',
-      subject_id: this.getCurrentQuestion().id
-    })
-
-    this.setState({
-      currentQuesitonIndex: this.state.currentQuesitonIndex + 1
-    })
-  }
-
-  goToPreviousQuestion() {
-    this.log({
-      event: 'go_to_previous',
-      subject: 'question',
-      subject_id: this.getCurrentQuestion().id
-    })
-
-    this.setState({
-      currentQuesitonIndex: this.state.currentQuesitonIndex - 1
-    })
-  }
-
   goToQuestion(index) {
     this.log({
       event: 'go_to',
       subject: 'question',
-      subject_id: this.getCurrentQuestion().id
+      index
     })
 
     this.setState({
