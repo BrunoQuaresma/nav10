@@ -1,4 +1,4 @@
-class CreateExamApplicationHistories < ActiveRecord::Migration[5.1]
+class CreateExamApplicationLogs < ActiveRecord::Migration[5.1]
   def change
     create_table :exam_application_logs do |t|
       t.references :user, foreign_key: true

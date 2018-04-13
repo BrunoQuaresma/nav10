@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(version: 20180403221206) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "exam_application_histories", force: :cascade do |t|
+  create_table "exam_application_logs", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "exam_application_id"
     t.string "event"
@@ -23,8 +23,8 @@ ActiveRecord::Schema.define(version: 20180403221206) do
     t.integer "subject_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["exam_application_id"], name: "index_exam_application_histories_on_exam_application_id"
-    t.index ["user_id"], name: "index_exam_application_histories_on_user_id"
+    t.index ["exam_application_id"], name: "index_exam_application_logs_on_exam_application_id"
+    t.index ["user_id"], name: "index_exam_application_logs_on_user_id"
   end
 
   create_table "exam_applications", force: :cascade do |t|
@@ -36,17 +36,10 @@ ActiveRecord::Schema.define(version: 20180403221206) do
     t.index ["group_id"], name: "index_exam_applications_on_group_id"
   end
 
-  create_table "exam_question_options", force: :cascade do |t|
-    t.string "title"
-    t.bigint "exam_question_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["exam_question_id"], name: "index_exam_question_options_on_exam_question_id"
-  end
-
   create_table "exam_questions", force: :cascade do |t|
     t.text "description"
     t.integer "right_option_index"
+    t.integer "difficulty_level"
     t.bigint "exam_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -56,6 +49,8 @@ ActiveRecord::Schema.define(version: 20180403221206) do
   create_table "exams", force: :cascade do |t|
     t.string "title"
     t.integer "duration_in_minutes"
+    t.integer "number_of_questions"
+    t.integer "number_of_options"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -105,11 +100,10 @@ ActiveRecord::Schema.define(version: 20180403221206) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "exam_application_histories", "exam_applications"
-  add_foreign_key "exam_application_histories", "users"
+  add_foreign_key "exam_application_logs", "exam_applications"
+  add_foreign_key "exam_application_logs", "users"
   add_foreign_key "exam_applications", "exams"
   add_foreign_key "exam_applications", "groups"
-  add_foreign_key "exam_question_options", "exam_questions"
   add_foreign_key "exam_questions", "exams"
   add_foreign_key "exams", "users"
   add_foreign_key "groups_users", "groups"

@@ -17,7 +17,7 @@
     <div class="card mb-1">
       <div class="card-body">
         <div class="row align-items-center">
-          <div class="col h5 m-0">
+          <div class="col-6 h5 m-0">
             <a href="<%= edit_panel_exam_path(exam) %>">
               <%= exam.title %>
             </a>
@@ -29,8 +29,8 @@
           </div>
 
           <div class="col">
-            <div>Questões</div>
-            <div><b><%= exam.exam_questions.count %></b></div>
+            <div>Nº de questões</div>
+            <div><b><%= exam.number_of_questions %></b></div>
           </div>
 
           <div class="col-auto ml-auto">

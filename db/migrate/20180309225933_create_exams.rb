@@ -4,6 +4,7 @@ class CreateExams < ActiveRecord::Migration[5.1]
       t.string :title
       t.integer :duration_in_minutes
       t.integer :number_of_questions
+      t.integer :number_of_options
       t.references :user, foreign_key: true
 
       t.timestamps
