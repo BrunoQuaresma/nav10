@@ -1,4 +1,6 @@
 class Panel::ExamsController < PanelController
+  before_action :set_exam, only: [:update, :edit, :destroy]
+
   def index
     @exams = Exam.all
   end
@@ -8,26 +10,21 @@ class Panel::ExamsController < PanelController
   end
 
   def edit
-    @exam = Exam.find(params[:id])
   end
 
   def update
-    @exam = Exam.find(params[:id])
-
     @exam.update(exam_params)
 
-    redirect_to panel_exams_path
+    redirect_back fallback_location: edit_panel_exam_path(@exam)
   end
 
   def create
-    current_user.exams.create(exam_params)
+    exam = current_user.exams.create(exam_params)
 
-    redirect_to panel_exams_path
+    redirect_to edit_panel_exam_path(exam, sub_page: 'answers')
   end
 
   def destroy
-    @exam = Exam.find(params[:id])
-
     @exam.destroy
 
     redirect_to panel_exams_path
@@ -35,7 +32,21 @@ class Panel::ExamsController < PanelController
 
   private
 
+  def set_exam
+    @exam = Exam.find(params[:id])
+  end
+
   def exam_params
+    if @exam.present?
+      return params.require(:exam).permit(
+        :title,
+        :duration_in_minutes,
+        :number_of_questions,
+        :number_of_options,
+        answers: @exam.number_of_questions.times.map{|i| "#{i}".to_sym}
+      )
+    end
+
     params.require(:exam).permit(
       :title,
       :duration_in_minutes,

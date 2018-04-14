@@ -4,6 +4,12 @@ module ApplicationHelper
   end
 
   def print_time_in_minutes(time_in_seconds)
-    print_time(time_in_seconds / 60)
+    print_time(time_in_seconds / 60.to_f)
+  end
+
+  def letter_option(index)
+    options = ['A', 'B', 'C', 'D', 'E', 'F']
+
+    options[index]
   end
 end

@@ -5,18 +5,13 @@ module LogsHelper
   end
 
   def print_log_question_description log
-    question = ExamQuestion.find(log['subject_id'])
-
-    question.description
+    log['index'].to_i + 1
   end
 
   def print_log_select_description log
-    question_id, option_index = log['subject_id'].split('_')
+    question_index, option_index = log['index'].split('_')
 
-    question = ExamQuestion.find(question_id)
-    option = question.exam_question_options[option_index.to_i]
-
-    "#{option.title} da questão #{question.description}"
+    "#{letter_option(option_index.to_i)} da questão #{question_index.to_i + 1}"
   end
 
   private
@@ -37,7 +32,8 @@ module LogsHelper
   def print_log_subject_name log
     subject_names = {
       'question': 'a questão',
-      'exam': 'o exame'
+      'exam': 'o exame',
+      'showQuestions': 'as questões'
     }
 
     subject_names[log['subject'].to_sym] if log['subject'].present?

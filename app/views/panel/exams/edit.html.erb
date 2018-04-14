@@ -7,5 +7,65 @@
     </div>
   </div>
 
-  <%= render partial: 'form', locals: { exam: @exam } %>
+  <div class="pt-2 pb-4">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a
+          class="nav-link <%= params[:sub_page].nil? ? 'active' : '' %>"
+          href="<%= edit_panel_exam_path(@exam) %>
+        ">
+          Editar
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a
+          class="nav-link <%= params[:sub_page] == 'answers' ? 'active' : '' %>"
+          href="<%= edit_panel_exam_path(@exam, sub_page: 'answers') %>"
+        >
+          Respostas
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <% if params[:sub_page] == 'answers' %>
+    <%= form_for [:panel, @exam]  do |f| %>
+      <div class="row font-weight-bold text-muted mb-4">
+        <div class="col-2">Índice</div>
+
+        <div class="col-1">A</div>
+        <div class="col-1">B</div>
+        <div class="col-1">C</div>
+        <div class="col-1">D</div>
+        <div class="col-1">E</div>
+      </div>
+
+      <% @exam.number_of_questions.times do |question_index| %>
+        <div class="row text-muted">
+          <div class="col-2"><%= question_index + 1 %></div>
+
+          <% @exam.number_of_options.times do |option_index| %>
+            <div class="col-1">
+              <input
+                type="radio"
+                name="exam[answers][<%= question_index %>]"
+                value="<%= option_index %>"
+                <%= @exam.answers && @exam.answers["#{question_index}"] == "#{option_index}" ? 'checked' : '' %>
+              >
+            </div>
+          <% end %>
+        </div>
+        <hr>
+      <% end %>
+
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">
+          Salvar respostas
+        </button>
+      </div>
+    <% end %>
+  <% else %>
+    <%= render partial: 'form', locals: { exam: @exam } %>
+  <% end %>
 </div>

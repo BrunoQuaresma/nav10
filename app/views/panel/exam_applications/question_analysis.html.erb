@@ -21,13 +21,13 @@
     </ul>
   </div>
 
-  <% @questions.each_with_index do |question, question_index| %>
+  <% @exam.number_of_questions.times do |question_index| %>
     <div class="card mb-2">
       <div class="p-4">
         <div class="row">
           <div class="col-6">
             <div><b>QUESTÃO</b></div>
-            <p class="lead m-0"><%= question.description %></p>
+            <p class="lead m-0"><%= question_index + 1 %></p>
           </div>
 
           <div class="col-6">
@@ -38,20 +38,20 @@
             </div>
             <div class="row">
               <div class="col-4">
-                <% question.exam_question_options.each_with_index do |option, option_index| %>
-                  <div class="py-3 <%= option_index == question.right_option_index.to_i ? 'text-success font-weight-bold' : ''  %>"><%= option.title %></div>
+                <% @exam.number_of_options.times do |option_index| %>
+                  <div class="py-3 <%= option_index.to_s == @exam.answers[question_index.to_s] ? 'text-success font-weight-bold' : ''  %>"><%= letter_option(option_index) %></div>
                 <% end %>
               </div>
 
               <div class="col-4">
-                <% question.exam_question_options.each_with_index do |option, option_index| %>
-                  <div class="py-3 <%= option_index == question.right_option_index.to_i ? 'text-success font-weight-bold' : ''  %>"><%= @exam_application.count_option_choices(question_index, option_index) %></div>
+                <% @exam.number_of_options.times do |option_index| %>
+                  <div class="py-3 <%= option_index.to_s == @exam.answers[question_index.to_s] ? 'text-success font-weight-bold' : ''  %>"><%= @exam_application.count_option_choices(question_index, option_index) %></div>
                 <% end %>
               </div>
 
               <div class="col-4">
-                <% question.exam_question_options.each_with_index do |option, option_index| %>
-                  <div class="py-3 <%= option_index == question.right_option_index.to_i ? 'text-success font-weight-bold' : ''  %>"><%= @exam_application.count_option_choices_percentage(question_index, option_index) %>%</div>
+                <% @exam.number_of_options.times do |option_index| %>
+                  <div class="py-3 <%= option_index.to_s == @exam.answers[question_index.to_s] ? 'text-success font-weight-bold' : ''  %>"><%= @exam_application.count_option_choices_percentage(question_index, option_index) %>%</div>
                 <% end %>
               </div>
             </div>

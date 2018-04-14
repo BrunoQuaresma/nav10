@@ -13,7 +13,7 @@ class Panel::ExamApplicationsController < PanelController
 
   def question_analysis
     @exam_application = ExamApplication.find(params[:exam_application_id])
-    @questions = @exam_application.exam.exam_questions
+    @exam = @exam_application.exam
   end
 
   def new
