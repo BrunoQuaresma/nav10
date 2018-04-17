@@ -43,7 +43,7 @@
 
       <% @exam.number_of_questions.times do |question_index| %>
         <div class="row text-muted">
-          <div class="col-2"><%= question_index + 1 %></div>
+          <div class="col-2"><%= question_index + @exam.start_question_number %></div>
 
           <% @exam.number_of_options.times do |option_index| %>
             <div class="col-1">

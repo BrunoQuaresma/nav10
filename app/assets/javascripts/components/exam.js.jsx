@@ -59,7 +59,7 @@ class Exam extends React.Component {
               <div className="col-4" key={index}>
                 <div className={`card mb-3 ${this.isAnswer(index) ? 'bg-primary text-white' : ''}`} onClick={this.goToQuestion.bind(this, index)}>
                   <div className="p-3 text-center">
-                    {index + 1}
+                    {index + exam.start_question_number}
                   </div>
                 </div>
               </div>
@@ -90,7 +90,7 @@ class Exam extends React.Component {
     return (
       <div className="container py-3">
         <div className="mb-3">
-          <h3 className="mb-3">Questão #{questionIndex + 1}</h3>
+          <h3 className="mb-3">Questão #{questionIndex + exam.start_question_number}</h3>
           {Array(exam.number_of_options).fill().map((v, index) => (
             <div
               className={this.getOptionClassName(index)}

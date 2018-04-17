@@ -43,6 +43,7 @@ class Panel::ExamsController < PanelController
         :duration_in_minutes,
         :number_of_questions,
         :number_of_options,
+        :start_question_number,
         answers: @exam.number_of_questions.times.map{|i| "#{i}".to_sym}
       )
     end
@@ -51,7 +52,8 @@ class Panel::ExamsController < PanelController
       :title,
       :duration_in_minutes,
       :number_of_questions,
-      :number_of_options
+      :number_of_options,
+      :start_question_number
     )
   end
 end

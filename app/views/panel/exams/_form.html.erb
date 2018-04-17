@@ -26,6 +26,12 @@
         </div>
       <% end %>
 
+
+      <div class="form-group">
+        <label for="" class="required">Questões começam em</label>
+        <%= f.number_field :start_question_number, class: 'form-control', required: true, value: exam.start_question_number || 1 %>
+      </div>
+
       <div class="form-group text-right">
         <button class="btn btn-primary">
           Salvar
