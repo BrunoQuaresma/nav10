@@ -10,6 +10,20 @@ button {
   outline: 0 !important;
 }
 
+.bg-brand {
+  background-color: #1c66ac;
+}
+
+.btn-accent {
+  background-color: #00a9ff;
+  border: #00a9ff;
+  color: #FFF !important;
+
+  &:hover {
+    background-color: #029be8;
+  }
+}
+
 .minh-100 {
   min-height: 100%;
 }
@@ -84,26 +98,40 @@ button {
   // }
 }
 
+.card-hover {
+  transition: 0.15s ease-in;
+
+  &:hover {
+    background-color: #f3f3f3;
+  }
+}
+
 .square-option {
   display: block;
   width: 30px;
 }
 
-.card-body {
-  padding: 0.8rem 1.25rem;
+.ellipsis {
+  text-overflow: ellipsis;
+
+  /* Required for text-overflow to do anything */
+  white-space: nowrap;
+  overflow: hidden;
 }
 
+
+
 .page-header {
-  @extend .mb-3;
+  @extend .mb-4;
 
   display: flex;
   align-items: center;
 
   .page-header__title {
-    @extend .h1;
+    @extend .h2;
+    font-weight: 300;
     margin: 0;
   }
-
 
   .page-header__actions {
     margin-left: auto;

@@ -4,7 +4,7 @@
       <h1 class="page-header__title">Aplicação de simulado</h1>
 
       <div class="page-header__actions">
-        <a href="<%= new_panel_exam_application_path %>" class="btn btn-primary">Nova aplicação</a>
+        <a href="<%= new_panel_exam_application_path %>" class="btn btn-accent">Nova aplicação</a>
       </div>
     <% else %>
       <h1 class="page-header__title">Simulados</h1>
@@ -17,14 +17,36 @@
     </div>
   <% end %>
 
+  <div class="row px-4 py-2">
+    <div class="col-8 col-md-3">
+      <b class="text-muted">Aplicação</b>
+    </div>
+
+    <div class="col-md-3">
+      <b class="text-muted">Simulado</b>
+    </div>
+
+    <div class="col-md-2">
+      <b class="text-muted">Turma</b>
+    </div>
+
+    <div class="col-md-2">
+      <b class="text-muted">Aplicado em</b>
+    </div>
+
+    <div class="col-md-2 text-right">
+      <b class="text-muted">Ações</b>
+    </div>
+  </div>
+
   <% @exam_applications.each do |exam_application| %>
-    <div class="card mb-1">
+    <div class="card mb-1 card-hover">
       <div class="card-body">
         <div class="row align-items-center">
-          <div class="col-8 h5 m-0">
+          <div class="col-8 col-md-3 m-0">
             <% if current_user.teacher? %>
               <a href="<%= panel_exam_application_path(exam_application) %>">
-                Aplicação <%= exam_application.id %>
+                <b>Aplicação <%= exam_application.id %></b>
               </a>
             <% elsif(!current_user.answered?(exam_application)) %>
               <a href="<%= panel_exam_application_start_path(exam_application) %>">
@@ -37,30 +59,26 @@
           </div>
 
           <% if current_user.teacher? %>
-            <div class="col">
-              <div>Simulado</div>
-              <div><b><%= exam_application.exam.title %></b></div>
+            <div class="col-md-3 ellipsis">
+              <%= exam_application.exam.title %>
             </div>
           <% elsif(current_user.answered?(exam_application)) %>
             <div class="col">
-              <div>Acerto</div>
-              <div><b><%= current_user.correctness_percentage(exam_application) %>%</b></div>
+              <%= current_user.correctness_percentage(exam_application) %>%
             </div>
           <% end %>
 
-          <div class="col d-none d-md-block">
-            <div>Turma</div>
-            <div><b><%= exam_application.group.name %></b></div>
+          <div class="col-md-2 d-none d-md-block">
+            <%= exam_application.group.name %>
           </div>
 
           <% if current_user.teacher? %>
-            <div class="col">
-              <div>Aplicado em</div>
-              <div><b><%= exam_application.created_at.strftime("%d/%m/%Y") %></b></div>
+            <div class="col-md-2">
+              <%= exam_application.created_at.strftime("%d/%m/%Y") %>
             </div>
           <% end %>
 
-          <div class="col-auto ml-auto d-flex">
+          <div class="col-md-2 text-right d-flex justify-content-end">
             <% if current_user.teacher? %>
               <%= button_to "Excluir", panel_exam_application_path(exam_application), method: :delete, class: 'btn btn-sm btn-confirm mr-2', data: { confirm: 'Você tem certeza que deseja deletar esta aplicação?' } %>
               <a href="<%= edit_panel_exam_application_path(exam_application) %>" class="btn btn-sm btn-primary">Editar</a>
