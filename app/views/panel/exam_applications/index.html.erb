@@ -41,7 +41,7 @@
               <div>Simulado</div>
               <div><b><%= exam_application.exam.title %></b></div>
             </div>
-          <% elsif %>
+          <% elsif(current_user.answered?(exam_application)) %>
             <div class="col">
               <div>Acerto</div>
               <div><b><%= current_user.correctness_percentage(exam_application) %>%</b></div>
