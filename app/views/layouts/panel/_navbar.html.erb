@@ -8,11 +8,13 @@
 
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" href="<%= panel_exams_path %>">Simulados</a>
-        </li>
+
 
         <% if current_user.teacher? %>
+          <li class="nav-item">
+            <a class="nav-link" href="<%= panel_exams_path %>">Simulados</a>
+          </li>
+
           <li class="nav-item">
             <a class="nav-link" href="<%= panel_exam_applications_path %>">Aplicações</a>
           </li>
@@ -23,6 +25,10 @@
 
           <li class="nav-item">
             <a class="nav-link" href="<%= panel_groups_path %>">Turmas</a>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <a class="nav-link" href="<%= panel_exam_applications_path %>">Simulados</a>
           </li>
         <% end %>
 
