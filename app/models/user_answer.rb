@@ -13,6 +13,8 @@ class UserAnswer < ApplicationRecord
     points = 0
     exam_answers = exam_application.exam.answers
 
+    return 0 if exam_answers.nil?
+
     answers.each do |answer|
       question_index = answer[0]
       option_index = answer[1]

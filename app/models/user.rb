@@ -19,4 +19,8 @@ class User < ApplicationRecord
   def answered?(exam_application)
     exam_application.user_answers.where(user_id: id).count > 0
   end
+
+  def correctness_percentage exam_application
+    exam_application.user_answers.find_by(user_id: id).correctness_percentage
+  end 
 end

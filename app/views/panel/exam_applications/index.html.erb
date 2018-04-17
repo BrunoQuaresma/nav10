@@ -21,7 +21,7 @@
     <div class="card mb-1">
       <div class="card-body">
         <div class="row align-items-center">
-          <div class="col h5 m-0">
+          <div class="col-8 h5 m-0">
             <% if current_user.teacher? %>
               <a href="<%= panel_exam_application_path(exam_application) %>">
                 Aplicação <%= exam_application.id %>
@@ -40,6 +40,11 @@
             <div class="col">
               <div>Simulado</div>
               <div><b><%= exam_application.exam.title %></b></div>
+            </div>
+          <% elsif %>
+            <div class="col">
+              <div>Acerto</div>
+              <div><b><%= current_user.correctness_percentage(exam_application) %>%</b></div>
             </div>
           <% end %>
 
