@@ -18,5 +18,10 @@
 //= require jquery_ujs
 //= require popper
 //= require bootstrap-sprockets
+//= require select2
 //= require components
 //= require_tree .
+
+$( document ).on('turbolinks:load', function() {
+  $(".select2").select2();
+});

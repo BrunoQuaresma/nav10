@@ -9,7 +9,7 @@
       <div class="form-group">
         <label for="">Alunos da turma</label>
 
-        <%= f.collection_select :user_ids, students, :id, :name, {}, { :multiple => true, class: 'form-control' } %>
+        <%= f.select :user_ids, students.collect {|a| [a.name, a.id]}, {}, :multiple => true, class: 'select2 form-control' %>
       </div>
 
       <div class="form-group">
