@@ -3,7 +3,7 @@
     <h1 class="page-header__title">Simulados</h1>
 
     <div class="page-header__actions">
-      <a href="<%= new_panel_exam_path %>" class="btn btn-primary">Novo simulado</a>
+      <a href="<%= new_panel_exam_path %>" class="btn btn-accent">Novo simulado</a>
     </div>
   </div>
 
@@ -13,28 +13,46 @@
     </div>
   <% end %>
 
+  <div class="row px-4 py-2">
+    <div class="col-6">
+      <b class="text-muted">Título</b>
+    </div>
+
+    <div class="col">
+      <b class="text-muted">Duração</b>
+    </div>
+
+    <div class="col">
+      <b class="text-muted">Nº de questões</b>
+    </div>
+
+    <div class="col-2 text-right">
+      <b class="text-muted">Ações</b>
+    </div>
+  </div>
+
   <% @exams.each do |exam| %>
     <div class="card mb-1">
       <div class="card-body">
         <div class="row align-items-center">
-          <div class="col-6 h5 m-0">
+          <div class="col-6 m-0">
             <a href="<%= edit_panel_exam_path(exam) %>">
-              <%= exam.title %>
+              <b><%= exam.title %></b>
             </a>
           </div>
 
           <div class="col">
-            <div>Duração</div>
-            <div><b><%= exam.duration_in_minutes %> minutos</b></div>
+            <%= exam.duration_in_minutes %> minutos
           </div>
 
           <div class="col">
-            <div>Nº de questões</div>
-            <div><b><%= exam.number_of_questions %></b></div>
+            <%= exam.number_of_questions %>
           </div>
 
-          <div class="col-auto ml-auto">
-            <%= button_to "Excluir", panel_exam_path(exam), method: :delete, class: 'btn btn-sm btn-confirm', data: { confirm: 'Você tem certeza que deseja deletar este simulado?' } %>
+          <div class="col-2 text-right">
+            <%= button_to panel_exam_path(exam), method: :delete, class: 'btn btn-transparent btn-sm btn-confirm mr-2', title: 'Deletar', data: { confirm: 'Você tem certeza que deseja deletar este simulado?' } do %>
+              <i class="fas fa-times"></i>
+            <% end %>
           </div>
         </div>
       </div>

@@ -3,8 +3,10 @@
     <div class="col col-sm-6 col-lg-4 p-lg-5 mx-sm-auto">
       <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
         <h1 class="text-center">
-          NAV10<br>
-          <small class="text-muted">Entrar</small>
+          <img src="<%= image_url('brand.png') %>" alt="Logo do nav10">
+          <div>
+            <small class="text-muted">Entrar</small>
+          </div>
         </h1>
 
         <div class="form-group">
@@ -28,7 +30,7 @@
       </footer>
     </div>
 
-    <div class="d-none d-lg-block col-lg-8 bg-primary h-100 text-light p-5">
+    <div class="d-none d-lg-block col-lg-8 bg-brand--light h-100 text-light p-5">
       <div class="row align-items-center h-100">
         <div class="col">
           <div class="display-3">

@@ -2,6 +2,8 @@
 
 @import "bootstrap";
 
+$colored-color:  #db4d49;
+
 body, html {
   height: 100%;
 }
@@ -10,8 +12,37 @@ button {
   outline: 0 !important;
 }
 
+@mixin box_shadow ($level) {
+  @if $level == 1 {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  } @else if $level == 2 {
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  } @else if $level == 3 {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  } @else if $level == 4 {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  } @else if $level == 5 {
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+  }
+}
+
 .bg-brand {
   background-color: #1c66ac;
+}
+
+.bg-brand--light {
+  background-color: #198ac4;
+}
+
+.btn-transparent {
+  background: transparent;
+  color: #333 !important;
+  opacity: 0.7;
+  transition: all 0.15s;
+
+  &:hover {
+    opacity: 0.9;
+  }
 }
 
 .btn-accent {
@@ -334,4 +365,17 @@ button {
             left: -14px;
             right: auto;
         }
+}
+
+.navbar {
+  @include box_shadow(1);
+
+  .nav-item {
+    @extend .py-2;
+    border-bottom: 4px solid transparent;
+
+    &.active {
+      border-bottom: 4px solid $colored-color;
+    }
+  }
 }

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-brand py-3 mb-3">
+<nav class="navbar navbar-expand-lg navbar-dark bg-brand py-3 py-md-0 mb-3">
   <div class="container">
     <a class="navbar-brand" href="#">
       <!-- <img src="<%= image_url('brand.png') %>" alt=""> -->
@@ -11,27 +11,11 @@
 
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
-
-
-        <% if current_user.teacher? %>
-          <li class="nav-item">
-            <a class="nav-link" href="<%= panel_exams_path %>">Simulados</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="<%= panel_exam_applications_path %>">Aplicações</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="<%= panel_students_path %>">Estudantes</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="<%= panel_groups_path %>">Turmas</a>
-          </li>
-        <% else %>
-          <li class="nav-item">
-            <a class="nav-link" href="<%= panel_exam_applications_path %>">Simulados</a>
+        <% navbar_links(current_user).map do |link| %>
+          <li class="nav-item <%= 'active' if link[:active] %>">
+            <a class="nav-link" href="<%= link[:path] %>">
+              <%= link[:title] %>
+            </a>
           </li>
         <% end %>
 
