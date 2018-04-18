@@ -1,76 +1,83 @@
 <div class="container py-4">
   <div class="page-header">
-    <h1 class="page-header__title">Histórico</h1>
-
-    <div class="page-header__actions">
-      <a
-        href="<%= panel_exam_applications_path(@user_answer.exam_application_id) %>"
-        class="btn btn-light"
-      >
-        Voltar
-      </a>
-    </div>
+    <h1 class="page-header__title">Análise</h1>
   </div>
 
   <div class="row">
-    <div class="col-md-4">
-      <div class="card">
-        <div class="card-body">
-          <b>Estudante</b>
-          <div><%= @user_answer.user.name %></div>
+    <div class="col-md-8">
+      <div class="row px-4 py-2 text-muted">
+        <div class="col-3">
+          <b>Questão</b>
+        </div>
+
+        <div class="col-3">
+          <b>Tempo total</b>
+        </div>
+
+        <div class="col-3">
+          <b>Resposta</b>
+        </div>
+
+        <div class="col-3">
+          <b>Acertou</b>
         </div>
       </div>
-    </div>
 
-    <div class="col-md-4">
-      <div class="card">
-        <div class="card-body">
-          <b>Acerto</b>
-          <div><%= @user_answer.correctness_percentage %>%</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="card">
-        <div class="card-body">
-          <b>Exame</b>
-          <div><%= @user_answer.exam_application.exam.title %></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <ul class="timeline">
-    <% @user_answer.logs.each do |log| %>
-      <li>
-        <div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div>
-        <div class="timeline-panel">
-          <div class="timeline-heading">
-            <h4 class="timeline-title">
-              <%= print_log(log) %>
-            </h4>
-
-            <% if log['subject'] == 'question' %>
-              <p class="mb-1">
-                <%= print_log_question_description(log) %>
-              </p>
-            <% end %>
-
-            <% if log['event'] == 'select' %>
-              <p class="mb-1">
-                <%= print_log_select_description(log) %>
-              </p>
-            <% end %>
-
-            <% if log['event'] == 'see' %>
-              <p class="mb-1">
-                Duração: <%= print_time(@user_answer.event_duration(log)) %> segundos
-              </p>
-            <% end %>
+      <% @exam.number_of_questions.times do |question_index| %>
+        <div class="card mb-1">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-3"><b>#<%= question_index + @exam.start_question_number %></b></div>
+              <div class="col-3"><%= @user_answer.total_question_time(question_index) %> <small>segundos</small></div>
+              <div class="col-3"><%= letter_option(@user_answer.answers[question_index.to_s]) || '-' %></div>
+              <div class="col-3">
+                <% if(@user_answer.answers[question_index.to_s].present? && @user_answer.answers[question_index.to_s] == @exam.answers[question_index.to_s]) %>
+                  <i class="fas fa-check text-success"></i>
+                <% else %>
+                  <i class="fas fa-minus text-danger"></i>
+                <% end %>
+              </div>
+            </div>
           </div>
         </div>
-      </li>
-    <% end %>
-  </ul>
+      <% end %>
+    </div>
+
+    <div class="col-md-4">
+      <div class="px-4 py-2 text-muted">
+        <b>Histórico</b>
+      </div>
+
+      <% @user_answer.logs.each do |log| %>
+        <% if log['event'] == 'start' %>
+          <div class="card mb-1">
+            <div class="card-body">
+              Começou às <b><%= log['time'].to_datetime.strftime("%d/%m/%Y - %H:%M") %></b>
+            </div>
+          </div>
+        <% elsif log['event'] == 'see' && log['subject'] == 'question' %>
+          <div class="card mb-1">
+            <div class="card-body">
+              Visualizou a questão <b>#<%= log['index'].to_i + @exam.start_question_number %></b> por
+              <b><%= @user_answer.event_duration(log) %> segundos</b>
+
+              <% if @user_answer.next_log(log)['event'] == 'select' %>
+                <div>e selecionou a <b>opção
+                  <%= letter_option(@user_answer.next_log(log)['index'].split('_')[1].to_i) %>
+                </b></div>
+              <% elsif @user_answer.next_log(log)['subject'] == 'showQuestions' %>
+                <div>e voltou para a tela de questões</div>
+              <% end %>
+            </div>
+          </div>
+        <% elsif log['event'] == 'finish' %>
+          <div class="card mb-1">
+            <div class="card-body">
+              Finalizou às <b><%= log['time'].to_datetime.strftime("%d/%m/%Y - %H:%M") %></b>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
 </div>

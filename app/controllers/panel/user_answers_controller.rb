@@ -11,5 +11,6 @@ class Panel::UserAnswersController < PanelController
 
   def show
     @user_answer = UserAnswer.find(params[:id])
+    @exam = @user_answer.exam_application.exam
   end
 end

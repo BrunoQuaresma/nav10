@@ -8,6 +8,10 @@ module ApplicationHelper
   end
 
   def letter_option(index)
+    return nil if index.nil?
+
+    index = index.to_i
+
     options = ['A', 'B', 'C', 'D', 'E', 'F']
 
     options[index]

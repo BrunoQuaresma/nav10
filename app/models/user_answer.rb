@@ -9,6 +9,13 @@ class UserAnswer < ApplicationRecord
     logs.sort_by{|l| l['time']}
   end
 
+  def total_question_time(question_index)
+    logs
+      .select{|l| l['event'] == 'see' && l['index'] == question_index.to_s}
+      .map{|l| event_duration(l)}
+      .sum
+  end
+
   def correctness_points
     points = 0
     exam_answers = exam_application.exam.answers
