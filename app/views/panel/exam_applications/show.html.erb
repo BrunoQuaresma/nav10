@@ -1,13 +1,9 @@
 <div class="container py-4">
   <div class="page-header">
     <h1 class="page-header__title">Aplicação <%= @exam_application.id %></h1>
-
-    <div class="page-header__actions">
-      <a href="<%= panel_exam_applications_path %>" class="btn btn-light">Voltar</a>
-    </div>
   </div>
 
-  <div class="py-4">
+  <div class="mb-4">
     <ul class="nav nav-pills">
       <li class="nav-item">
         <a class="nav-link active" href="<%= panel_exam_application_path(@exam_application) %>">Respostas</a>
@@ -20,7 +16,7 @@
   </div>
 
   <div class="row mb-4">
-    <div class="col-md-3">
+    <div class="col-md-4">
       <div class="card">
         <div class="card-body">
           <div class="display-4"><%= @exam_application.users_done_count %></div>
@@ -29,16 +25,16 @@
       </div>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-4">
       <div class="card">
         <div class="card-body">
           <div class="display-4"><%= print_time_in_minutes(@exam_application.medium_time_count_in_seconds) %></div>
-          <div>Tempo médio em minutos</div>
+          <div>Tempo médio <small class="text-muted">em minutos</small></div>
         </div>
       </div>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-4">
       <div class="card">
         <div class="card-body">
           <div class="display-4"><%= @exam_application.medium_correctness_percentage %>%</div>
@@ -49,24 +45,36 @@
   </div>
 
 
+  <div class="row px-4 py-2">
+    <div class="col-6">
+      <b class="text-muted">Estudante</b>
+    </div>
+
+    <div class="col-3">
+      <b class="text-muted">Tempo total</b>
+    </div>
+
+    <div class="col-3">
+      <b class="text-muted">Acertos</b>
+    </div>
+  </div>
+
   <% @exam_application.user_answers.each do |user_answer| %>
     <div class="card mb-1">
       <div class="card-body">
         <div class="row align-items-center">
-          <div class="col h5 m-0">
+          <div class="col-6">
             <a href="<%= panel_exam_application_user_answer_path(user_answer.exam_application, user_answer) %>">
-              <%= user_answer.user.name %>
+              <b><%= user_answer.user.name %></b>
             </a>
           </div>
 
-          <div class="col">
-            <div>Tempo total</div>
-            <div><b><%= print_time_in_minutes(user_answer.total_time) %> minutos</b></div>
+          <div class="col-3">
+            <%= print_time_in_minutes(user_answer.total_time) %> minutos
           </div>
 
-          <div class="col">
-            <div>Acertos</div>
-            <div><b><%= user_answer.correctness_percentage %>%</b></div>
+          <div class="col-3">
+            <%= user_answer.correctness_percentage %>%
           </div>
         </div>
       </div>
