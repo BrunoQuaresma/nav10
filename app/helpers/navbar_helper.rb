@@ -3,7 +3,12 @@ module NavbarHelper
     links = user.teacher? ? teacher_links : student_links
 
     links = links.map do |link|
-      link[:active] = current_page?(link[:path])
+      if(current_page?(panel_root_path) && link[:path] == panel_exam_applications_path)
+        link[:active] = true
+      else
+        link[:active] = current_page?(link[:path])
+      end
+
       link
     end
 
