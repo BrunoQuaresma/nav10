@@ -34,8 +34,8 @@
     <div class="col-md-4">
       <div class="card">
         <div class="card-body">
-          <div class="display-4"><%= print_time_in_minutes(@exam_application.medium_time_count_in_seconds) %></div>
-          <div>Tempo médio <small class="text-muted">em minutos</small></div>
+          <div class="display-4"><%= print_short_time(@exam_application.medium_time_count_in_seconds) %></div>
+          <div>Tempo médio</div>
         </div>
       </div>
     </div>
@@ -76,7 +76,7 @@
           </div>
 
           <div class="col-3">
-            <%= print_time_in_minutes(user_answer.total_time) %> minutos
+            <%= print_human_time(user_answer.total_time) %>
           </div>
 
           <div class="col-3">

@@ -380,6 +380,8 @@ button {
 
   .nav-item {
     @extend .py-2;
+
+    border-top: 4px solid transparent;
     border-bottom: 4px solid transparent;
 
     &.active {

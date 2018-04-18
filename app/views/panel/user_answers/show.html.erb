@@ -28,7 +28,7 @@
           <div class="card-body">
             <div class="row">
               <div class="col-3"><b>#<%= question_index + @exam.start_question_number %></b></div>
-              <div class="col-3"><%= @user_answer.total_question_time(question_index) %> <small>segundos</small></div>
+              <div class="col-3"><%= print_human_time(@user_answer.total_question_time(question_index)) %></div>
               <div class="col-3"><%= letter_option(@user_answer.answers[question_index.to_s]) || '-' %></div>
               <div class="col-3">
                 <% if(@user_answer.answers[question_index.to_s].present? && @user_answer.answers[question_index.to_s] == @exam.answers[question_index.to_s]) %>
