@@ -1,6 +1,12 @@
 <div class="container py-4">
   <div class="page-header">
-    <h1 class="page-header__title">Aplicação <%= @exam_application.id %></h1>
+    <div class="page-header__title">
+      Aplicação <%= @exam_application.id %>
+
+      <div class="h5 mt-2">
+        <a class="text-muted" href="<%= edit_panel_exam_path(@exam_application.exam) %>"><%= @exam_application.exam.title %></a>
+      </div>
+    </div>
   </div>
 
   <div class="mb-4">

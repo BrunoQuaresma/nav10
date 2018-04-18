@@ -1,15 +1,15 @@
 <div class="container py-4">
   <div class="page-header">
-    <h1 class="page-header__title">
+    <div class="page-header__title">
       Aplicação <%= @exam_application.id %>
-    </h1>
 
-    <div class="page-header__actions">
-      <a href="<%= panel_exam_applications_path %>" class="btn btn-light">Voltar</a>
+      <div class="h5 mt-2">
+        <a class="text-muted" href="<%= edit_panel_exam_path(@exam) %>"><%= @exam.title %></a>
+      </div>
     </div>
   </div>
 
-  <div class="py-4">
+  <div class="mb-5">
     <ul class="nav nav-pills">
       <li class="nav-item">
         <a class="nav-link" href="<%= panel_exam_application_path(@exam_application) %>">Respostas</a>
@@ -22,42 +22,43 @@
   </div>
 
   <% @exam.number_of_questions.times do |question_index| %>
-    <div class="card mb-2">
-      <div class="p-4">
-        <div class="row">
-          <div class="col-6">
-            <div><b>QUESTÃO</b></div>
-            <p class="lead m-0"><%= question_index + @exam.start_question_number %></p>
-          </div>
+    <div class="mb-4">
+      <h5>Questão #<%= question_index + @exam.start_question_number %></h5>
 
-          <div class="col-6">
-            <div class="row">
-              <div class="col-4 font-weight-bold text-muted">OPÇÃO</div>
-              <div class="col-4 font-weight-bold text-muted">SELECIONADOS</div>
-              <div class="col-4 font-weight-bold text-muted">PORCENTAGEM</div>
-            </div>
-            <div class="row">
+      <div class="row px-4 py-2">
+        <div class="col-4">
+          <b class="text-muted">Opção</b>
+        </div>
+
+        <div class="col-4">
+          <b class="text-muted">Selecionado</b>
+        </div>
+
+        <div class="col-4">
+          <b class="text-muted">Porcentagem</b>
+        </div>
+      </div>
+
+      <% @exam.number_of_options.times do |option_index| %>
+        <div class="card mb-1 <%= 'border-success text-success' if @exam.answers.present? && @exam.answers[question_index.to_s] == option_index.to_s %>">
+          <div class="card-body">
+            <div class="row align-items-center">
               <div class="col-4">
-                <% @exam.number_of_options.times do |option_index| %>
-                  <div class="py-3 <%= option_index.to_s == @exam.answers[question_index.to_s] ? 'text-success font-weight-bold' : ''  %>"><%= letter_option(option_index) %></div>
-                <% end %>
+                <b><%= letter_option(option_index) %></b>
               </div>
 
               <div class="col-4">
-                <% @exam.number_of_options.times do |option_index| %>
-                  <div class="py-3 <%= option_index.to_s == @exam.answers[question_index.to_s] ? 'text-success font-weight-bold' : ''  %>"><%= @exam_application.count_option_choices(question_index, option_index) %></div>
-                <% end %>
+                <%= @exam_application.count_option_choices(question_index, option_index) %>
+                <small>vezes</small>
               </div>
 
               <div class="col-4">
-                <% @exam.number_of_options.times do |option_index| %>
-                  <div class="py-3 <%= option_index.to_s == @exam.answers[question_index.to_s] ? 'text-success font-weight-bold' : ''  %>"><%= @exam_application.count_option_choices_percentage(question_index, option_index) %>%</div>
-                <% end %>
+                <%= @exam_application.count_option_choices_percentage(question_index, option_index) %>%
               </div>
             </div>
           </div>
         </div>
-      </div>
+      <% end %>
     </div>
   <% end %>
 </div>
