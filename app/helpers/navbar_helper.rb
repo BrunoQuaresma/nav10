@@ -21,7 +21,7 @@ module NavbarHelper
       [
         {
           title: 'Simulados',
-          path: panel_exam_applications_path
+          path: panel_student_exams_path
         }
       ]
     end
