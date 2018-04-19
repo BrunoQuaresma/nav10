@@ -28,7 +28,7 @@ class Exam extends React.Component {
         <div className="container text-center py-5">
           <h1 className="mb-4">Você finalizou o simulado!</h1>
 
-          <a href="/panel/exam_applications" className="btn btn-primary btn-lg btn-block">
+          <a href="/panel/student_exams" className="btn btn-primary btn-lg btn-block">
             Ir para página inicial
           </a>
         </div>
@@ -80,12 +80,6 @@ class Exam extends React.Component {
     const exam = this.getExam();
     const questionIndex = this.state.currentQuesitonIndex;
     const letterOptions = ['A', 'B', 'C', 'D', 'E', 'F'];
-
-    this.log({
-      event: 'see',
-      subject: 'question',
-      index: questionIndex
-    })
 
     return (
       <div className="container py-3">
@@ -184,11 +178,6 @@ class Exam extends React.Component {
   }
 
   showAll() {
-    this.log({
-      event: 'see',
-      subject: 'showQuestions'
-    })
-
     this.setState({
       screen: 'showQuestions'
     })

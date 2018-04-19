@@ -21,12 +21,8 @@ class Panel::StudentExamsController < PanelController
   end
 
   def all_history
-    @exam_application = ExamApplication.find(params[:student_exam_id])
-
-    @history = ExamApplicationHistory.where(
-      user_id: params[:user_id],
-      exam_application_id: params[:student_exam_id]
-    )
+    @user_answer = current_user.user_answers.find_by(exam_application_id: params[:student_exam_id])
+    @exam = @user_answer.exam_application.exam
   end
 
   private

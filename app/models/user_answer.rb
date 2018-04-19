@@ -11,7 +11,7 @@ class UserAnswer < ApplicationRecord
 
   def total_question_time(question_index)
     logs
-      .select{|l| l['event'] == 'see' && l['index'] == question_index.to_s}
+      .select{|l| l['event'] == 'go_to' && l['index'] == question_index.to_s}
       .map{|l| event_duration(l)}
       .sum
   end

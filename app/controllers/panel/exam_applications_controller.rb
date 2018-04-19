@@ -1,10 +1,6 @@
 class Panel::ExamApplicationsController < PanelController
   def index
-    if current_user.teacher?
-      @exam_applications = ExamApplication.all
-    else
-      @exam_applications = current_user.exam_applications
-    end
+    @exam_applications = ExamApplication.all
   end
 
   def start
