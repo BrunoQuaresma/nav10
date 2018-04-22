@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
 
+  get '/panel', to: 'panel#index'
+
   namespace :panel do
     resources :students
     resources :exams
@@ -16,9 +18,7 @@ Rails.application.routes.draw do
       post '/history', to: 'student_exams#history'
       get '/history', to: 'student_exams#all_history'
     end
-
-    root 'exam_applications#index'
   end
 
-  root 'panel/exam_applications#index'
+  root 'panel#index'
 end
