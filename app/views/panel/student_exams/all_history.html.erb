@@ -33,7 +33,7 @@
               <div class="col-5 pr-0"><%= print_short_time(@user_answer.total_question_time(question_index)) %></div>
               <div class="col-2"><%= letter_option(@user_answer.answers[question_index.to_s]) || '-' %></div>
               <div class="col-2">
-                <% if(@user_answer.answers[question_index.to_s].present? && @user_answer.answers[question_index.to_s] == @exam.answers[question_index.to_s]) %>
+                <% if(@user_answer.answers[question_index.to_s].present? && @exam.answers.present? && @user_answer.answers[question_index.to_s] == @exam.answers[question_index.to_s]) %>
                   <i class="fas fa-check text-success"></i>
                 <% else %>
                   <i class="fas fa-minus text-danger"></i>
