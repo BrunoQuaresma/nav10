@@ -1,0 +1,26 @@
+<%= form_for [:panel, student], url: student.new_record? ? panel_students_path : panel_student_path(student)  do |f| %>
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group">
+        <label for="" class="required">Nome</label>
+        <%= f.text_field :name, class: 'form-control', required: true %>
+      </div>
+
+      <div class="form-group">
+        <label for="" class="required">E-mail</label>
+        <%= f.email_field :email, class: 'form-control', required: true %>
+      </div>
+
+      <div class="form-group">
+        <label for="" class="required">Senha</label>
+        <%= f.password_field :password, class: 'form-control', required: student.new_record? %>
+      </div>
+
+      <div class="form-group">
+        <button class="btn btn-primary">
+          Salvar estudante
+        </button>
+      </div>
+    </div>
+  </div>
+<% end %>
