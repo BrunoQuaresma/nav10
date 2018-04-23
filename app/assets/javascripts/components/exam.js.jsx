@@ -43,7 +43,7 @@ class Exam extends React.Component {
             Após o início do exame ele não poderá ser interrompido até sua finalização
             ou limite de tempo.
           </p>
-          <a href="/panel/exam_applications" className="btn btn-light btn-lg btn-block">Voltar</a>
+          <a href="/panel/student_exams" className="btn btn-light btn-lg btn-block">Voltar</a>
           <button onClick={this.start.bind(this)} className="btn btn-primary btn-lg btn-block">Ok, começar agora</button>
         </div>
       )
