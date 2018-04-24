@@ -18,6 +18,8 @@ class ExamApplication < ApplicationRecord
 
   def count_option_choices(question_index, option_index)
     user_answers.map do |user_answer|
+      return 0 if user_answer.answers.nil?
+
       user_answer.answers.select do |question_i, option_i|
         option_i.to_i == option_index && question_i.to_i == question_index
       end.count
