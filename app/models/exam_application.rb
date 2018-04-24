@@ -20,7 +20,7 @@ class ExamApplication < ApplicationRecord
     user_answers.map do |user_answer|
       user_answer.answers.try(:select) do |question_i, option_i|
         option_i.to_i == option_index && question_i.to_i == question_index
-      end.try(:count)
+      end.try(:count) || 0
     end.sum
   end
 
