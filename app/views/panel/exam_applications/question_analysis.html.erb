@@ -53,7 +53,7 @@
               </div>
 
               <div class="col-4">
-                <%= @exam_application.count_option_choices_percentage(question_index, option_index) %>%
+                <%= @exam_application.count_option_choices_percentage(question_index, option_index).round(1) %>%
               </div>
             </div>
           </div>

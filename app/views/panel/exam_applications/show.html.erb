@@ -43,7 +43,7 @@
     <div class="col-md-4">
       <div class="card">
         <div class="card-body">
-          <div class="display-4"><%= @exam_application.medium_correctness_percentage %>%</div>
+          <div class="display-4"><%= @exam_application.medium_correctness_percentage.round(1) %>%</div>
           <div>Média de acertos</div>
         </div>
       </div>
@@ -80,7 +80,7 @@
           </div>
 
           <div class="col-3">
-            <%= user_answer.correctness_percentage %>%
+            <%= user_answer.correctness_percentage.round(1) %>%
           </div>
         </div>
       </div>
