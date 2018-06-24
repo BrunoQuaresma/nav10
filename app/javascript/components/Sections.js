@@ -1,4 +1,5 @@
 import React from 'react'
+import { Plug } from 'react-outlet'
 
 class Sections extends React.Component {
   constructor(props) {
@@ -43,7 +44,12 @@ class Sections extends React.Component {
             <b className="text-muted">SEÇÕES</b>
 
             <div className="ml-auto">
-              <button className="btn btn-sm btn-link" data-toggle="modal" data-target="#newSectionModal">
+              <button
+                className="btn btn-sm btn-link"
+                data-toggle="modal"
+                data-target="#newSectionModal"
+                type="button"
+              >
                 <i className="fa fa-plus"></i> ADICIONAR
               </button>
             </div>
@@ -153,70 +159,72 @@ class NewSectionModal extends React.Component {
 
   render() {
     return (
-      <div className="modal fade" id="newSectionModal" tabIndex="-1" role="dialog" aria-labelledby="newSectionModalLabel" aria-hidden="true">
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <form id="newSectionForm" onSubmit={this.handleSubmit}>
-              <div className="modal-header">
-                <h5 className="modal-title" id="newSectionModalLabel">Nova seção</h5>
-                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              
-              <div className="modal-body">                
-                <div className="form-group">
-                  <label htmlFor="">Nome da seção</label>
-                  <input
-                    required
-                    name="name"
-                    type="text"
-                    placeholder="Ex. Geografia"
-                    className="form-control"
-                    onChange={this.handleInputOnChange}
-                  />
+      <Plug outletId="footerOutlet">
+        <div className="modal fade" id="newSectionModal" tabIndex="-1" role="dialog" aria-labelledby="newSectionModalLabel" aria-hidden="true">
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <form id="newSectionForm" onSubmit={this.handleSubmit}>
+                <div className="modal-header">
+                  <h5 className="modal-title" id="newSectionModalLabel">Nova seção</h5>
+                  <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                
+                <div className="modal-body">                
+                  <div className="form-group">
+                    <label htmlFor="">Nome da seção</label>
+                    <input
+                      required
+                      name="name"
+                      type="text"
+                      placeholder="Ex. Geografia"
+                      className="form-control"
+                      onChange={this.handleInputOnChange}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="">Questões da seção</label>
+                    <div className="row align-items-center">
+                      <div className="col">
+                        <input
+                          required
+                          type="number"
+                          name="start_at"
+                          placeholder="1"
+                          className="form-control"
+                          min="0"
+                          onChange={this.handleInputOnChange}
+                        />
+                      </div>
+
+                      <div className="col-auto p-0">até</div>
+                      
+                      <div className="col">
+                        <input
+                          required
+                          type="number"
+                          name="end_at"
+                          placeholder="20"
+                          className="form-control"
+                          min="0"
+                          onChange={this.handleInputOnChange}
+                        />
+                      </div>
+                    </div>
+                  </div>                
                 </div>
 
-                <div className="form-group">
-                  <label htmlFor="">Questões da seção</label>
-                  <div className="row align-items-center">
-                    <div className="col">
-                      <input
-                        required
-                        type="number"
-                        name="start_at"
-                        placeholder="1"
-                        className="form-control"
-                        min="0"
-                        onChange={this.handleInputOnChange}
-                      />
-                    </div>
-
-                    <div className="col-auto p-0">até</div>
-                    
-                    <div className="col">
-                      <input
-                        required
-                        type="number"
-                        name="end_at"
-                        placeholder="20"
-                        className="form-control"
-                        min="0"
-                        onChange={this.handleInputOnChange}
-                      />
-                    </div>
-                  </div>
-                </div>                
-              </div>
-
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="submit" className="btn btn-primary">Salvar</button>
-              </div>
-            </form>
+                <div className="modal-footer">
+                  <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                  <button type="submit" className="btn btn-primary">Salvar</button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
+      </Plug>
     )
   }
 }
