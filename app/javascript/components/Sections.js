@@ -1,3 +1,5 @@
+import React from 'react'
+
 class Sections extends React.Component {
   constructor(props) {
     super(props)
@@ -218,3 +220,5 @@ class NewSectionModal extends React.Component {
     )
   }
 }
+
+export default Sections

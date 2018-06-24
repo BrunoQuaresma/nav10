@@ -1,3 +1,5 @@
+import React from 'react'
+
 class Exam extends React.Component {
   constructor(props) {
     super(props)
@@ -226,3 +228,5 @@ class Exam extends React.Component {
     })
   }
 }
+
+export default Exam

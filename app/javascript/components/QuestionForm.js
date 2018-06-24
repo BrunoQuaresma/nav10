@@ -1,3 +1,5 @@
+import React from 'react'
+
 class QuestionForm extends React.Component {
   constructor(props) {
     super(props)
@@ -143,3 +145,5 @@ class QuestionForm extends React.Component {
     this.setState({ headline: event.target.value })
   }
 }
+
+export default QuestionForm

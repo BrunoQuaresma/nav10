@@ -12,14 +12,11 @@
 //
 //= require rails-ujs
 //= require turbolinks
-//= require react
-//= require react_ujs
 //= require jquery3
 //= require jquery_ujs
 //= require popper
 //= require bootstrap-sprockets
 //= require select2
-//= require components
 //= require_tree .
 
 $( document ).on('turbolinks:load', function() {
