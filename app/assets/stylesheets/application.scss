@@ -395,3 +395,38 @@ button {
     background: #f8f9fa;
   }
 }
+
+.wizzard {
+  display: flex;
+  justify-content: center;
+
+  .wizzard__pill {
+    background: #dddddd;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 100%;
+    margin-right: 10px;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      display: block;
+      width: 15px;
+      height: 3px;
+      background: #dddddd;
+      top: 50%;
+      left: -10px;
+    }
+
+    &:first-child::after {
+      display: none;
+    }
+
+    &.is--active {
+      font-weight: 700;
+    }
+  }
+}

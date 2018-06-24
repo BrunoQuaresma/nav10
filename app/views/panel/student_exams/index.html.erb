@@ -1,57 +1,66 @@
 <div class="container py-4">
   <div class="page-header">
-    <h1 class="page-header__title">Simulados</h1>
+    <h1 class="page-header__title">
+      Simulados
+    </h1>
+
+    <div class="page-header__actions">
+      <a href="<%= new_panel_student_exam_path %>" class="btn">
+        <i class="fas fa-plus"></i> ADICIONAR
+      </a>
+    </div>
   </div>
 
   <% if @exam_applications.empty? %>
     <div class="text-center">
-      <h3 class="text-muted">Nenhum simulado.</h3>
+      <h5 class="text-muted">Nenhum simulado.</h5>
     </div>
-  <% end %>
+  <% else %>
 
-  <div class="row px-4 py-2 d-none d-md-flex">
-    <div class="col-8">
-      <b class="text-muted">Simulado</b>
+    <div class="row px-4 py-2 d-none d-md-flex">
+      <div class="col-8">
+        <b class="text-muted">Simulado</b>
+      </div>
+
+      <div class="col-4">
+        <b class="text-muted">Turma</b>
+      </div>
     </div>
 
-    <div class="col-4">
-      <b class="text-muted">Turma</b>
-    </div>
-  </div>
+    <% @exam_applications.each do |exam_application| %>
+      <div class="card mb-1">
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col-12 col-md-8 m-0 ellipsis">
+              <% if(!current_user.answered?(exam_application)) %>
+                <a href="<%= panel_exam_application_start_path(exam_application) %>">
+                  <%= exam_application.exam.title %>
+                </a>
+              <% else %>
+                <div class="text-muted">
+                  <div class="row align-items-center">
+                    <div class="col-auto pr-0" style="min-width: 75px">
+                      <span class="badge badge-pill badge-primary" style="font-size: 0.9rem">
+                        <%= current_user.correctness_percentage(exam_application) %>%
+                      </span>
+                    </div>
 
-  <% @exam_applications.each do |exam_application| %>
-    <div class="card mb-1">
-      <div class="card-body">
-        <div class="row align-items-center">
-          <div class="col-12 col-md-8 m-0 ellipsis">
-            <% if(!current_user.answered?(exam_application)) %>
-              <a href="<%= panel_exam_application_start_path(exam_application) %>">
-                <%= exam_application.exam.title %>
-              </a>
-            <% else %>
-              <div class="text-muted">
-                <div class="row align-items-center">
-                  <div class="col-auto pr-0" style="min-width: 75px">
-                    <span class="badge badge-pill badge-primary" style="font-size: 0.9rem">
-                      <%= current_user.correctness_percentage(exam_application) %>%
-                    </span>
-                  </div>
-
-                  <div class="col ellipsis">
-                    <a href="<%= panel_student_exam_history_path(exam_application) %>">
-                      <%= exam_application.exam.title %>
-                    </a>
+                    <div class="col ellipsis">
+                      <a href="<%= panel_student_exam_history_path(exam_application) %>">
+                        <%= exam_application.exam.title %>
+                      </a>
+                    </div>
                   </div>
                 </div>
-              </div>
-            <% end %>
-          </div>
+              <% end %>
+            </div>
 
-          <div class="col-4 d-none d-md-block">
-            <%= exam_application.group.name %>
+            <div class="col-4 d-none d-md-block">
+              <%= exam_application.group.name %>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    <% end %>
   <% end %>
 </div>

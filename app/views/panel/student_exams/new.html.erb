@@ -1,0 +1,52 @@
+<div class="container py-4">
+  <div class="page-header">
+    <h1 class="page-header__title">
+      Novo simulado
+    </h1>
+  </div>
+
+  <div class="text-muted mb-2 font-weight-bold">GERAL</div>
+  <hr class="mt-0">
+
+  <%= form_for [:panel, @new_exam], url: new_panel_student_exam_path(@new_exam) do |f| %>
+    <div class="mb-3">
+      <div class="form-group">
+        <label class="required" for="">Título</label>
+        <%= f.text_field :title, class: 'form-control', required: true, placeholder: 'Simulado 1' %>
+      </div>
+
+      <div class="form-group">
+        <label class="required" for="">Duração em minutos</label>
+        <%= f.number_field :duration_in_minutes, class: 'form-control', required: true, min: 1 %>
+      </div>
+
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <label class="required" for="">Nº de questões</label>
+            <%= f.number_field :number_of_questions, class: 'form-control', required: true %>
+          </div>
+        </div>
+
+        <div class="col-6">
+          <div class="form-group">
+            <label class="required" required for="">Qtd. de opções</label>
+            <%= f.number_field :number_of_options, class: 'form-control', required: true, value: 5 %>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="" class="required">Questões começam em</label>
+        <%= f.number_field :start_question_number, class: 'form-control', required: true, value: 1 %>
+      </div>
+    </div>
+
+    <%= react_component('Sections') %>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-block btn-lg btn-primary">Próximo</button>
+    </div>
+  <% end %>
+</div>
+

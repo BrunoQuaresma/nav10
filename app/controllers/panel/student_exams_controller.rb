@@ -5,6 +5,16 @@ class Panel::StudentExamsController < PanelController
     @exam_applications = current_user.exam_applications
   end
 
+  def new
+    @new_exam = current_user.exams.new
+  end
+
+  def create
+    exam = current_user.exams.create(exam_params)
+
+    redirect_to :back
+  end
+
   def start
     @exam_application = current_user.exam_applications.find(params[:student_exam_id])
   end
@@ -29,5 +39,16 @@ class Panel::StudentExamsController < PanelController
 
   def history_params
     params.require(:history).permit(:subject_id, :subject, :event)
+  end
+
+  def exam_params
+    params.require(:exam).permit(
+      :title,
+      :duration_in_minutes,
+      :number_of_questions,
+      :number_of_options,
+      :start_question_number,
+      :exam_sections_attributes
+    )
   end
 end
