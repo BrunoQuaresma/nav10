@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180624204407) do
+ActiveRecord::Schema.define(version: 20180624213648) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,8 +32,11 @@ ActiveRecord::Schema.define(version: 20180624204407) do
     t.bigint "group_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_self", default: false
+    t.bigint "user_id"
     t.index ["exam_id"], name: "index_exam_applications_on_exam_id"
     t.index ["group_id"], name: "index_exam_applications_on_group_id"
+    t.index ["user_id"], name: "index_exam_applications_on_user_id"
   end
 
   create_table "exam_questions", force: :cascade do |t|
@@ -116,6 +119,7 @@ ActiveRecord::Schema.define(version: 20180624204407) do
   add_foreign_key "exam_application_logs", "users"
   add_foreign_key "exam_applications", "exams"
   add_foreign_key "exam_applications", "groups"
+  add_foreign_key "exam_applications", "users"
   add_foreign_key "exam_questions", "exams"
   add_foreign_key "exam_sections", "exams"
   add_foreign_key "exams", "users"

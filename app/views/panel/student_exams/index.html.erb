@@ -21,10 +21,6 @@
       <div class="col-8">
         <b class="text-muted">Simulado</b>
       </div>
-
-      <div class="col-4">
-        <b class="text-muted">Turma</b>
-      </div>
     </div>
 
     <% @exam_applications.each do |exam_application| %>
@@ -53,10 +49,6 @@
                   </div>
                 </div>
               <% end %>
-            </div>
-
-            <div class="col-4 d-none d-md-block">
-              <%= exam_application.group.name %>
             </div>
           </div>
         </div>

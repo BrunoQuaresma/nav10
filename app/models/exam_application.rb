@@ -1,6 +1,7 @@
 class ExamApplication < ApplicationRecord
   belongs_to :exam
-  belongs_to :group
+  belongs_to :group, optional: true
+  belongs_to :user, optional: true
 
   has_many :user_answers, dependent: :destroy
 

@@ -85,19 +85,19 @@ class Sections extends React.Component {
       <div className="card p-3 mb-1" key={index}>
         <input
           type="hidden"
-          name={`exam[exam_sections_attributes][${index}]['name']`}
+          name={`exam[exam_sections_attributes][${index}][name]`}
           value={section.name}
         />
 
         <input
           type="hidden"
-          name={`exam[exam_sections_attributes][${index}]['start_at']`}
+          name={`exam[exam_sections_attributes][${index}][start_at]`}
           value={section.start_at}
         />
 
         <input
           type="hidden"
-          name={`exam[exam_sections_attributes][${index}]['end_at']`}
+          name={`exam[exam_sections_attributes][${index}][end_at]`}
           value={section.end_at}
         />
 
@@ -217,8 +217,8 @@ class NewSectionModal extends React.Component {
                 </div>
 
                 <div className="modal-footer">
-                  <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                  <button type="submit" className="btn btn-primary">Salvar</button>
+                  <button type="button" className="btn btn-light" data-dismiss="modal">Cancelar</button>
+                  <button type="submit" className="btn btn-primary">Adicionar</button>
                 </div>
               </form>
             </div>

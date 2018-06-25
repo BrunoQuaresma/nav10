@@ -10,9 +10,14 @@ class Panel::StudentExamsController < PanelController
   end
 
   def create
-    exam = current_user.exams.create(exam_params)
+    exam = current_user.exams.create!(exam_params)
+    ExamApplication.create!(
+      exam: exam,
+      user: current_user,
+      is_self: true
+    )
 
-    redirect_to :back
+    redirect_to panel_student_exams_path
   end
 
   def start
@@ -48,7 +53,7 @@ class Panel::StudentExamsController < PanelController
       :number_of_questions,
       :number_of_options,
       :start_question_number,
-      :exam_sections_attributes
+      :exam_sections_attributes => [:name, :start_at, :end_at]
     )
   end
 end

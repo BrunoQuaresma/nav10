@@ -8,7 +8,7 @@
   <div class="text-muted mb-2 font-weight-bold">GERAL</div>
   <hr class="mt-0">
 
-  <%= form_for [:panel, @new_exam], url: new_panel_student_exam_path(@new_exam) do |f| %>
+  <%= form_for [:panel, @new_exam], url: panel_student_exams_path do |f| %>
     <div class="mb-3">
       <div class="form-group">
         <label class="required" for="">Título</label>
@@ -45,7 +45,7 @@
     <%= react_component('Sections') %>
 
     <div class="form-group">
-      <button type="submit" class="btn btn-block btn-lg btn-primary">Próximo</button>
+      <button type="submit" class="btn btn-block btn-lg btn-primary">Salvar</button>
     </div>
   <% end %>
 </div>
